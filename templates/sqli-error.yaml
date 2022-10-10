@@ -1,0 +1,26 @@
+id: sqli-error
+info:
+    title: "SQL error honeytrap"
+requests:
+  - hidden: false # if true, it will not be exposed in sitemap nor the index page
+    log: false # this is legit, dont log it unless this user is malicious from a previous request
+    expect:
+      method: GET
+      path: '/author/:Id([0-9]+)'
+    reply:
+      status: 200
+      headers:
+        content-type: "text/html"
+      body: 
+        view: "author.html"
+  - hidden: false # if true, it will not be exposed in sitemap nor the index page
+    log: true # looks like this user is trying something
+    expect:
+      method: GET
+      path: '/author/:Id'
+    reply:
+      status: 500
+      headers:
+        content-type: "text/html"
+      body: 
+        contents: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2"

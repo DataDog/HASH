@@ -1,0 +1,5 @@
+honeypot-name: "php"
+port: 3000
+headers:
+  x-powered-by: "php 5.5"
+  x-use-cache: "always"

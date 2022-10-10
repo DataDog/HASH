@@ -1,0 +1,22 @@
+id: confluence
+info:
+    title: "333"
+    description: "333"
+requests:
+  - hidden: false # if true, it will not be exposed in sitemap nor the index page
+    log: true # this is legit, dont log it unless this user is malicious from a previous request
+    expect:
+      method: GET
+      path: '/rest/sharelinks/1.0/link'
+    modules: #use internal module (// calling request)
+      http:
+        - req.query.url
+      data:
+        username: "hello world"
+        password: "simple-pass"
+    reply:
+      status: 200
+      headers:
+        content-type: "text/html"
+      body: 
+        contents: "DB_NAME=xxx<br />DB_PASSWORD=pass" #lets replace this with fake wp-config.php file
