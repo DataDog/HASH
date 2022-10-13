@@ -4,25 +4,28 @@ require('dd-trace').init({
     logInjection: true
 });
 
+//TODO: validate app
+const app = require('./libs/app')(__dirname, process.argv.slice(2))
+
 //loading dotenv config
 require('dotenv').config()
-const config = require('./libs/config')(__dirname + '/init.yaml')
-const app = require('./libs/init')(config);
+const config = require('./libs/config')(app.initFile)
+const http = require('./libs/init')(config);
 
 
 //loading templates
-const templates = require('./libs/templates').load(__dirname + '/templates');
+const templates = require('./libs/templates').load(app.templatesDir);
 
 //simulate
 const simulator = require('./libs/simulator')
-simulator.apply(app, templates)
+simulator.apply(http, templates)
 
 //default endpoint
-app.get('/', (req,res) => {
+http.get('/', (req,res) => {
     res.render('index')
 })
 
 
-app.listen(config.port, () => {
-    console.log(`Example app listening on port ${config.port}`)
+http.listen(config.port, () => {
+    console.log(`${app.name} listening on port ${config.port}`)
 })

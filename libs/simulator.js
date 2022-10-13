@@ -61,7 +61,7 @@ const handler = (app, request, template) => {
 }
 
 const buildSitemap = () => {
-    console.log(sitemapURLs)
+   // console.log(sitemapURLs)
 }
 
 module.exports = { apply }

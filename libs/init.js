@@ -15,12 +15,12 @@ module.exports = (config) => {
     console.log('Init: Configuring required middlewares (sessions, bodyparser)')
     //configure session
     app.set('trust proxy', 1) // trust first proxy
-    app.use(session({
-        secret: process.env.appKey,
-        resave: false,
-        saveUninitialized: true,
-        //cookie: { secure: true } //production only ssl
-    }))
+    // app.use(session({
+    //     secret: process.env.appKey,
+    //     resave: false,
+    //     saveUninitialized: true,
+    //     //cookie: { secure: true } //production only ssl
+    // }))
 
     app.use(express.json()) // for parsing application/json
     app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
