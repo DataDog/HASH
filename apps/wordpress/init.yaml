@@ -1,5 +1,0 @@
-honeypot-name: "php"
-port: 8080
-headers:
-  x-powered-by: "php 5.5"
-  Cookies: "PHPSSID=s%3A7iNblmbbr6kivJ9fz9QfCPpgZpFMNosU.R6PeE4VdiJ%2FuOTkmZHDjrf%2Bd%2FEnLkjkb8qQjvhk93xU; Path=/; HttpOnly"
