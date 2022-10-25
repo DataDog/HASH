@@ -1,3 +1,10 @@
+const figlet = require('figlet');
+console.log('-----------------------------------')
+console.log(
+    figlet.textSync('HASH', { horizontalLayout: 'full' })
+)
+console.log('-----------------------------------')
+
 // Init datadog tracer.
 require('dd-trace').init({
     appsec: true,

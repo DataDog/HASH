@@ -30,3 +30,62 @@ npm install
 node app.js
 ```
 
+
+Roadmap
+- [ ] CLI Wizard
+- [ ] Built-in modules
+    - [ ] session.set / session.get
+    - [ ] http simulator
+    - [ ] Shell simulator
+    - [ ] Database simulator
+
+
+
+id: confluence
+info:
+    title: "333"
+    description: "333"
+requests:
+  - hidden: false # if true, it will not be exposed in sitemap nor the index page
+    log: true # this is legit, dont log it unless this user is malicious from a previous request
+    expect:
+        method: GET
+        path: '/xxx/' #oShell.Exec('whoami')
+            
+    reply:
+        status: 200
+        headers:
+            content-type: "text/html"
+        body: 
+            contents: "gogo {{command}}"
+            variables:
+                command: request.query.id.match(/Exec('.*')/))
+
+
+
+
+id: confluence
+info:
+    title: "333"
+    description: "333"
+requests:
+  - hidden: false # if true, it will not be exposed in sitemap nor the index page
+    log: true # this is legit, dont log it unless this user is malicious from a previous request
+    expect:
+        method: GET
+        path: '/xxx2/'
+    reply:
+        handler: "xx.js"
+        
+
+
+# xx.js
+
+```
+module.exports = function(request, response) {
+    //do what you whant with the request parameter
+    //prepare your response dymanically
+    response.send('Hello world xx')
+}
+```
+            
