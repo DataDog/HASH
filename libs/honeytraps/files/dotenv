@@ -1,0 +1,4 @@
+DATABASE_URL=${rand:ip}
+DATABASE_USER=${rand:string}
+DATABASE_PASSWORD=${rand:string}
+DATABASE_PORT=3306

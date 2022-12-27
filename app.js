@@ -1,31 +1,41 @@
+require('dotenv').config()
 const figlet = require('figlet');
 console.log('-----------------------------------')
 console.log(
     figlet.textSync('HASH', { horizontalLayout: 'full' })
 )
+// console.log(
+//     figlet.textSync('Honeypot Framework', { horizontalLayout: 'full' })
+// )
 console.log('-----------------------------------')
 
 // Init datadog tracer.
 require('dd-trace').init({
     appsec: true,
-    logInjection: true
+    logInjection: true  
 });
 
 //TODO: validate app
-const app = require('./libs/app')(__dirname, process.argv.slice(2))
+const appName = process.env.DD_HASH_APP ||  process.argv.slice(2)[0]
+const app = require('./libs/app')(__dirname, appName)
 
-//loading dotenv config
-require('dotenv').config()
 const config = require('./libs/config')(app.initFile)
 const http = require('./libs/init')(config);
 
 
 //loading templates
-const templates = require('./libs/templates').load(app.templatesDir);
+const Template = require('./libs/template');
+
+const template = new Template(app);
+const templates = template.load()
+
+ 
 
 //simulate
-const simulator = require('./libs/simulator')
-simulator.apply(http, templates)
+console.log(app)
+const Simulator = require('./libs/simulator')
+const simulator = new Simulator(app, http, templates)
+simulator.apply()
 
 //default endpoint
 http.get('/', (req,res) => {

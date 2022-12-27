@@ -1,0 +1,7 @@
+User-agent: baidu
+crawl-delay: 1
+
+User-agent: *
+Disallow: /bak/
+Disallow: /${rand:string}/
+Disallow: /account-login/

@@ -1,30 +1,32 @@
 const express = require('express')
 const session = require('express-session')
-const mustacheExpress = require('mustache-express');
+const cookieParser = require('cookie-parser')
+const mustacheExpress = require('mustache-express'); 
 
 const { createLogger, format, transports } = require('winston');
-
+const { faker } = require('./randomizer')
 
 module.exports = (config) => {
 
     console.log('Init: starting')
-
+ 
     const app = express()
 
 
     console.log('Init: Configuring required middlewares (sessions, bodyparser)')
     //configure session
     app.set('trust proxy', 1) // trust first proxy
-    // app.use(session({
-    //     secret: process.env.appKey,
-    //     resave: false,
-    //     saveUninitialized: true,
-    //     //cookie: { secure: true } //production only ssl
-    // }))
+    app.use(session({
+        secret: process.env.APP_KEY,
+        resave: false,
+        saveUninitialized: true,
+        name: faker.internet.domainWord(),
+        //cookie: { secure: true } //production only ssl
+    }))
 
     app.use(express.json()) // for parsing application/json
     app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-
+    app.use(cookieParser())
 
 
     console.log('Init: Configure datadog logger')

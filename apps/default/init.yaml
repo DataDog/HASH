@@ -1,0 +1,10 @@
+honeypot-name: "default"
+port: 3000
+headers:
+built-in-traps:
+  enable: true
+  list:
+    - 1
+    - 2
+    - 3
+    - 4

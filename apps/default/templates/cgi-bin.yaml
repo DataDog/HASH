@@ -1,0 +1,14 @@
+id: cgi-bin
+info:
+    title: "cgi-bin trap"
+requests:
+  - isTrap: true 
+    expect:
+      method: GET
+      path: '/cgi-bin'
+    reply:
+      status: 500
+      headers:
+        content-type: "text/plain"
+      body: 
+        contents: "You are not allowed to access this folder"
