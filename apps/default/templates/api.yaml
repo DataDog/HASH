@@ -11,5 +11,3 @@ requests:
         content-type: "application/json"
       body: 
         view: "user-api.json"
-    config:
-      randomize: false #randomize with each request, default false
