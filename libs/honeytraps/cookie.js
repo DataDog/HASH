@@ -24,7 +24,7 @@ module.exports = (http) => {
 
         if(req.cookies && req.cookies[cookie_set.key] != cookie_set.value){
             //cookie manipulated
-            console.log('Simulation: --- Cookie Trap hit, marking the session as malicious', req.cookies[cookie_set.key])
+            console.log('Simulation: --- Cookie trap hit, marking the session as malicious', req.cookies[cookie_set.key])
             req.session.isMalicious = true
         }
 

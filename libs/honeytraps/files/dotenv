@@ -1,4 +1,4 @@
-DATABASE_URL=${rand:ip}
-DATABASE_USER=${rand:string}
-DATABASE_PASSWORD=${rand:string}
-DATABASE_PORT=3306
+DATABASE_URL=${faker.internet.ipv4}
+DATABASE_USER=${faker.internet.userName}
+DATABASE_PASSWORD=${faker.internet.password}
+DATABASE_PORT=${faker.helpers.arrayElement:[3306, 5432, 27017]}

@@ -1,0 +1,18 @@
+{
+    "login": "${faker.lorem.slug}",
+    "id": {{ params.userId }},
+    "node_id": "${faker.datatype.uuid}",
+    "avatar_url": "${faker.internet.avatar}",
+    "gravatar_id": "${faker.datatype.uuid}",
+    "url": "${faker.internet.url}",
+    "html_url": "${faker.internet.url}",
+    "type": "User",
+    "site_admin": ${faker.datatype.boolean},
+    "name": "${faker.name.fullName}",
+    "company": "${faker.company.name}",
+    "blog": "https://github.com/blog",
+    "location": "${faker.address.country}",
+    "email": "${faker.internet.email}",
+    "hireable": ${faker.datatype.boolean},
+    "bio": "${faker.lorem.paragraphs:3}"
+  }

@@ -10,10 +10,10 @@ console.log(
 console.log('-----------------------------------')
 
 // Init datadog tracer.
-require('dd-trace').init({
-    appsec: true,
-    logInjection: true  
-});
+// require('dd-trace').init({
+//     appsec: true,
+//     logInjection: true  
+// });
 
 //TODO: validate app
 const appName = process.env.DD_HASH_APP ||  process.argv.slice(2)[0]

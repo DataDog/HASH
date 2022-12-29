@@ -2,6 +2,7 @@ User-agent: baidu
 crawl-delay: 1
 
 User-agent: *
-Disallow: /bak/
-Disallow: /${rand:string}/
-Disallow: /account-login/
+Disallow: /c/${faker.lorem.slug}/
+Disallow: /c/${faker.lorem.slug}/
+Disallow: /c/${faker.lorem.slug}/
+Disallow: /d/${faker.lorem.slug}/

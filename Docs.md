@@ -30,7 +30,8 @@ id: default
 info:
     title: "Default"
 requests:
-  - expect:
+  - isTrap: false
+    expect:
       method: GET
       path: '/'
     reply:
@@ -49,6 +50,6 @@ build-in traps / Honeytrap Baits
 - [x] exposed readme.txt, changelog.txt
 - [ ] exposed archives
 - [ ] exposed admin panels
-- [ ] Fake Cookie Data
+- [x] Fake Cookie Data
 - [ ] Fake Hidden Form 
 - [ ] Fake HTML comments
