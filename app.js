@@ -10,15 +10,15 @@ console.log(' HTTP Agnostic Software Honeypot ')
 console.log('-----------------------------------')
 log('App', 'Starting HASH ')
 // Init datadog tracer.
-// require('dd-trace').init({
-//     appsec: true,
-//     logInjection: true  
-// });
+require('dd-trace').init({
+    appsec: true,
+    logInjection: true  
+});
 
 
 
-//TODO: validate app
-const appName = process.env.DD_HASH_APP ||  process.argv.slice(2)[0]
+
+const appName = process.env.APP_NAME ||  process.argv.slice(2)[0]
 const app = require('./libs/app')(__dirname, appName)
 
 const config = require('./libs/config')(app.initFile)

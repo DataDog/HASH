@@ -1,5 +1,23 @@
 # HASH Config
+You can have multiple applications with different configurations. Each application have its own folder using this structure
 
+```
+apps
+├── default
+│   ├── init.yaml
+│   └── templates
+│       |__ request1.yaml
+│       |__ request2.yaml
+├── application-2
+│   ├── init.yaml
+│   └── templates
+│       |__ request1.yaml
+│       |__ request2.yaml
+```
+
+> you can define which application hash should run in the environment variable `APP_NAME`
+
+The main configurations live inside `init.yaml` and `templates/` folder
 
 ## init.yaml
 the main configuration file, loaded when the framework initialized.

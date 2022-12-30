@@ -13,16 +13,3 @@ let log =  (module, message, level = 'log' ) => {
 
 
 module.exports = log;
-
-
-
-// console.log(chalk.green('Hello %s'), "Koko WAWA");
-
-// log('App','App started')
-// log('App','App started started started')
-// log('App','Appstartedstarted')
-// log('App','App started started')
-// log('App','App started')
-// log('App','App started asd asdklaj asdLJAEO0823 DSFLKJ23 ')
-// log('Template', 'Template parsing error', 'warning')
-// log('Template', 'Template not found', 'error')

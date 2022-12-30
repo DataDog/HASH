@@ -54,9 +54,38 @@ nodejs app.js
 
 ## Customization and configuration
 
-Read the full documentation here 
+You can customize the default application in `apps/default` or create a new application `apps/<your-app>`
 
+example request template
 
+```yaml
+id: sqli-error
+info:
+    title: "SQL error honeytrap"
+requests:
+  - isTrap: false 
+    expect:
+      method: GET
+      path: '/author/:Id([0-9]+)'
+    reply:
+      status: 200
+      headers:
+        content-type: "text/html"
+      body: 
+        view: "author.html"
+  - isTrap: true 
+    expect:
+      method: GET
+      path: '/author/:Id'
+    reply:
+      status: 500
+      headers:
+        content-type: "text/html"
+      body: 
+        contents: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2"
+```
+
+Read the config documentation [here](./docs/config.md)
 
 
 ## License and Contribution
