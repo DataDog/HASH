@@ -29,6 +29,7 @@ services:
       - DD_SERVICE=${DD_SERVICE:-sec-research}
       - DD_TRACE_DEBUG=true
       - DD_ENV=eslam-local  
+    tty: true
     depends_on:
       agent:
         condition: service_healthy

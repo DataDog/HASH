@@ -1,5 +1,6 @@
 const fs = require('fs')
 const randomizer = require('../randomizer')
+const log = require('../log')
 
 module.exports = (http) => {
     
@@ -14,7 +15,7 @@ module.exports = (http) => {
     for (const route in files) {
         const content = files[route];        
         http.get("/"+route, (req,res) => {
-            console.log('Simulation: --- Exposed files trap hit, marking the session as malicious')
+            log('Simulator', 'Exposed files trap hit, marking the session as malicious /' + route, 'warning')
             req.session.isMalicious = true
             res.set('Content-Type', 'text/plain') 
             res.status(500).send(content)

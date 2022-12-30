@@ -1,6 +1,7 @@
 const fs = require('fs')
 const randomizer = require('../randomizer')
- 
+const log = require('../log')
+
 module.exports = (http) => {
 
     let robotsTxt = fs.readFileSync(__dirname + '/files/robots.txt', {encoding: 'utf-8'});
@@ -14,7 +15,7 @@ module.exports = (http) => {
 
     http.get('/[cd]/*', (req,res) => {
         //if accessed, this request is malicious
-        console.log('Simulation: --- Robots.txt trap hit, marking the session as malicious')
+        log('Simulator', 'Robots.txt trap hit, marking the session as malicious', 'warning')
         req.session.isMalicious = true
         res.status(500).send("Internal Server Error")
     })

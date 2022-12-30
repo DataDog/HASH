@@ -1,19 +1,21 @@
 require('dotenv').config()
+const log = require('./libs/log')
 const figlet = require('figlet');
+const chalk = require('chalk')
 console.log('-----------------------------------')
 console.log(
     figlet.textSync('HASH', { horizontalLayout: 'full' })
 )
-// console.log(
-//     figlet.textSync('Honeypot Framework', { horizontalLayout: 'full' })
-// )
+console.log(' HTTP Agnostic Software Honeypot ')
 console.log('-----------------------------------')
-
+log('App', 'Starting HASH ')
 // Init datadog tracer.
 // require('dd-trace').init({
 //     appsec: true,
 //     logInjection: true  
 // });
+
+
 
 //TODO: validate app
 const appName = process.env.DD_HASH_APP ||  process.argv.slice(2)[0]
@@ -22,6 +24,8 @@ const app = require('./libs/app')(__dirname, appName)
 const config = require('./libs/config')(app.initFile)
 const http = require('./libs/init')(config);
 
+const { Cache } = require('./libs/randomizer')
+Cache.reset();
 
 //loading templates
 const Template = require('./libs/template');
@@ -29,10 +33,7 @@ const Template = require('./libs/template');
 const template = new Template(app);
 const templates = template.load()
 
- 
-
 //simulate
-console.log(app)
 const Simulator = require('./libs/simulator')
 const simulator = new Simulator(app, http, templates)
 simulator.apply()
@@ -44,5 +45,5 @@ http.get('/', (req,res) => {
 
 
 http.listen(config.port, () => {
-    console.log(`${app.name} listening on port ${config.port}`)
+    log('App',`${app.name} listening on port ${config.port}`)
 })

@@ -1,23 +1,17 @@
 const { faker } = require('@faker-js/faker')
 const Mustache = require('mustache');
 const crypto = require('crypto');
-const fs = require('fs')
-
-const getRandomArbitrary = (min, max) => {
-    return Math.round(Math.random() * (max - min) + min);
-}
+const fs = require('fs');
+const path = require("path");
 
 const fakeIt = (string) => { 
-    //let stringArr = string.split(/(\${[a-zA-Z\.\:\d]+})/)
     let stringArr = string.split(/(\${faker[^}]+})/)
-    console.log(stringArr.length,stringArr);
+
     for (let i = 0; i < stringArr.length; i++) {
         const chunk = stringArr[i];
-        console.log('CHUNK', chunk)
         if(chunk.indexOf('${faker.') === 0){
             //found calling to faker, lets parse and excute it;
             let fakerCall = chunk.replace(/\${([a-zA-Z\.0-9]+)(:([^}]+))?}/, "return this.$1($3)");
-            console.log('THe Code', fakerCall)
             let res = new Function(fakerCall).apply({faker});
             stringArr[i] = res;
         } 
@@ -28,13 +22,13 @@ const fakeIt = (string) => {
 
 
 const Cache = {
-    cacheDir: function(){
-        return __dirname + '/../cache/';
+    cacheDir: function(){ 
+        return __dirname + '/../cache/'; 
     },
     key: function(text){
         return crypto.createHash('md5').update(text).digest('hex');
     },
-    set: function(key, contents){
+    set: function(key, contents){ 
         return fs.writeFileSync(this.cacheDir() + key, contents);
     },
     get: function(key){
@@ -46,6 +40,20 @@ const Cache = {
         } catch (error) {
             return false;
         }
+    },
+    reset: function(){
+        let directory = this.cacheDir();
+        fs.readdir(directory, (err, files) => {
+            if (err) throw err;
+          
+            for (const file of files) {
+                if(file === '.gitignore') continue;
+                fs.unlink(path.join(directory, file), (err) => {
+                    if (err) throw err;
+                });
+            }
+
+        });
     }
 }
 
@@ -58,11 +66,8 @@ const render = (httpRequest, contents, vars) => {
     let cacheKey = Cache.key(httpRequest.path);
     let res = Cache.get(cacheKey)
     if(res){
-        console.log('Cache: Found, return result')
         return res;
     }
-
-    console.log('Cache: Not Found, lets create it')
 
     //cache not found, create it
     renderedContents = fakeIt(contents)
@@ -76,5 +81,6 @@ const render = (httpRequest, contents, vars) => {
 module.exports = {
     faker,
     fakeIt,
-    render
+    render,
+    Cache
 }

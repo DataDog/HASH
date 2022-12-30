@@ -1,3 +1,4 @@
+const log = require('./log')
 const express = require('express')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
@@ -7,13 +8,11 @@ const { createLogger, format, transports } = require('winston');
 const { faker } = require('./randomizer')
 
 module.exports = (config) => {
+    log('Init', 'Starting the server config')
 
-    console.log('Init: starting')
- 
     const app = express()
 
-
-    console.log('Init: Configuring required middlewares (sessions, bodyparser)')
+    log('Init', 'Configuring required middlewares (sessions, bodyparser)')
     //configure session
     app.set('trust proxy', 1) // trust first proxy
     app.use(session({
@@ -28,8 +27,7 @@ module.exports = (config) => {
     app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
     app.use(cookieParser())
 
-
-    console.log('Init: Configure datadog logger')
+    log('Init', 'Configure datadog logger')
     //configure logger
     const httpTransportOptions = {
         host: 'http-intake.logs.datadoghq.com',
@@ -68,7 +66,7 @@ module.exports = (config) => {
     app.use(datadogLogger)
 
 
-    console.log('Init: Configure template engine')
+    log('Init', 'Configure template engine')
     app.engine('mustache', mustacheExpress());
 
 
@@ -78,6 +76,7 @@ module.exports = (config) => {
     //remove signature
     app.disable('x-powered-by');
 
+    log('Init', 'Expose global headers' + JSON.stringify(config.headers))
     //add global headers if any
     app.use(function(req, res, next) {
         for (const header in config.headers) {
