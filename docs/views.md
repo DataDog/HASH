@@ -28,7 +28,41 @@ Example template
 ```
 
 ## Mustache
-For Mustache syntax use the standard `{{`  `}}` to wrap the dynamic contents
+For Mustache syntax use the standard `{{`  `}}` to wrap the dynamic contents. And you can set the template variable inside request templates in `reply.body.vars`
+
+example:
+
+```yaml
+id: view-example
+info:
+    title: "View Example"
+requests:
+  - expect:
+      method: GET
+      path: '/articles'
+    reply:
+      status: 200
+      headers:
+        content-type: "text/html"
+      body: 
+        view: "articles.html"
+        vars:
+          links:
+            - title: home
+              link: "/"
+            - title: about
+              link: "/about"
+            - title: contact
+              link: "/contact"
+```
+And in the template 
+
+```html
+{{#links}}
+<a href="{{ link }}">{{title}}</a>
+{{/links}}
+```
+Mustache will take care of rendering your content. See the full documentation [here](https://mustache.github.io/mustache.5.html)
 
 
 ## FakerJs
