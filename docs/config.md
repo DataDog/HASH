@@ -15,12 +15,12 @@ apps
 │       |__ request2.yaml
 ```
 
-> you can define which application hash should run in the environment variable `APP_NAME`
+> You can define which application HASH should run in the environment variable `APP_NAME`
 
 The main configurations live inside `init.yaml` and `templates/` folder
 
 ## init.yaml
-the main configuration file, loaded when the framework initialized.
+The main configuration file, loaded when the framework initialized.
 
 ```yaml
 name: "default"
@@ -39,9 +39,9 @@ headers:
 
 
 ## Request template
-Thie is the main component which define single request or group of requested
+Thie is the main component which define the endpoints the honeypot will implement, and their behavior.
 
-example:
+Example:
 
 ```yaml
 id: cgi-bin
@@ -65,16 +65,16 @@ requests:
 | id | the request Id (must be unique) | - | No |
 | info | key/value pairs for request metadata - its helpful when review the logs | - | Yes |
 | requests | an array of the requests in this yaml file | - | No |
-| -- isTrap | if true, any hit to this request will be marked as malicious and will be logged | false | Yes |
-| -- expect | The request route looks like | - | No |
+| -- isTrap | if true, any hit to this route will be marked as malicious and will be logged | false | Yes |
+| -- expect | description of the route | - | No |
 | -- -- method | the HTTP request method (GET/POST/HEAD/PUT/DELETE/OPTIONS) | GET | No |
-| -- -- path | the route | - | No |
-| -- reply | The response template for the request | - | No |
-| -- -- status | The response status code | 200 | No |
-| -- -- headers | List of headers to be returned with the response | - | Yes |
+| -- -- path | the route's name | - | No |
+| -- reply | the response template for the request | - | No |
+| -- -- status | response status code | 200 | No |
+| -- -- headers | list of headers to be returned with the response | - | Yes |
 | -- -- body | the response body | - | No |
-| -- -- -- contents | the contents of the response | - | Yes |
-| -- -- -- view | the file which contains the view (see: using rendered template) | - | Yes |
+| -- -- -- contents | the content of the response | - | Yes |
+| -- -- -- view | the file containing the view (see: using rendered template) | - | Yes |
 
 
 ### Using multiple requests
@@ -106,4 +106,4 @@ requests:
         contents: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2"
 ```
 
-In the above example you can see two requests, the first one is the legit call ex: `author/1` but if the attacker tries to manipulate it by inserting other characters ex: `author/999 or 1=1` it falls in the trap and the framework will reply with `500` error along with the standard MySQL error message `You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2`
+In the above example you can see two requests definition for the same endpoint. The first one define the legitimate call (ex: `author/1`) where the application reply with `author.html`. But if the attacker tries to manipulate the argument and provide a non-numeric value (such as `author/999 or 1=1`), it will fall in the trap and the framework will reply with a `500` error along with the standard MySQL error message `You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2`
