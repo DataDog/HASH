@@ -22,8 +22,10 @@ HASH is built using Node.js but it can mimic any web based language / server bas
 1. Copy `.env.example` to `.env` and add your secrets
 
 ```
-appKey=<random key used to encrypt cookies) 
-DD_SERVICE=<Service name> 
+Debug=false
+APP_KEY=<app key>
+APP_NAME=default # Application name (must be in this location apps/<yourapp>)
+DD_SERVICE=<Service name>
 DD_API_KEY=<Datadog API KEY> # Datadog api key
 ```
 
@@ -45,7 +47,7 @@ npm install
 4. Run HASH
 
 ```
-nodejs app.js
+node app.js
 ```
 > For production grade deployment explore running with PM2 or advanced deployment with Docker & Kubernetes
 
