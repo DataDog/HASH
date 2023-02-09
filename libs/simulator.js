@@ -1,4 +1,6 @@
+const { config } = require('dotenv');
 const fs = require('fs')
+const path = require('path');
 const log = require('./log')
 const randomizer = require('./randomizer')
 const honeytraps = {
@@ -9,29 +11,48 @@ const honeytraps = {
 
 
 class Simulator{
-    constructor(app, http, templates){
+    constructor(app, http, templates, dynamicTemplates){
         this.app = app
         this.http = http
         this.templates = templates
+        this.dynamicTemplates = dynamicTemplates
     }
 
-    apply(){ 
+    apply(config){ 
         //built-in modules
         //TODO: check config
-        this.builtinModules()
+        this.builtinModules(config)
 
- 
+        for (let index = 0; index < this.dynamicTemplates.length; index++) {
+            this.mockDynamicRequest(this.dynamicTemplates[index]);
+        }
+        
         for (let index = 0; index < this.templates.length; index++) { 
+            //check if its dynamic js file
             this.mockTemplate(this.templates[index])
         }
+
+        
+
     }
 
-    builtinModules(){
+    builtinModules(config){
+
+        if(config.disableBuiltIn && config.disableBuiltIn.includes('traps')){
+            return;
+        }
         //load internal honeytraps
+        //TODO: enable/disable internal module by config
         honeytraps.robots(this.http);
         honeytraps.exposedFiles(this.http)
         honeytraps.cookies(this.http)
         
+    }
+
+
+    mockDynamicRequest(template){
+        log('Simulator', 'Mocking Dynamic request '+ template) 
+        require(template)(this.http);
     }
 
     mockTemplate(template){
@@ -39,6 +60,8 @@ class Simulator{
             this.mockRequest(request, template)
         }
     }
+
+
 
     mockRequest(request, template){ 
         let expect = request.expect;
@@ -52,11 +75,12 @@ class Simulator{
  
 
         switch (expect.method){
+            //TODO: add more http methods
             case 'GET':
-                this.http.get(expect.path, this.handler(request, template))
+                this.http.get(expect.path, this.handler(request, template, expect))
                 break;
             case 'POST':
-                this.http.post(expect.path, this.handler(request, template))
+                this.http.post(expect.path, this.handler(request, template, expect))
                 break;
         }
     }
@@ -65,6 +89,7 @@ class Simulator{
         let reply = request.reply;
         return (req,res) => {
 
+            
             //if this a trap mark the full session as malicious
             if(request.isTrap){
                 log('Simulator', 'Trap hit, marking the session as malicious ', 'warning')
@@ -78,13 +103,24 @@ class Simulator{
 
             
             res.set(reply.headers)
+ 
+            if(reply.body.static){
+                console.log('Loading FROM', this.app.resourcesDir + "/" +request.reply.body.static)
+                let staticC = fs.readFileSync(this.app.resourcesDir + "/" +request.reply.body.static)
+                res.status(reply.status).send(staticC)  
+                return; 
+            }
 
             let templateVars = Object.assign({
-                params: req.params
+                params: req.params,
+                body: req.body,
+                query: req.query,
+                dateNow: new Date() 
             }, reply.body.vars || {})
             
             
-            let renderedContents = randomizer.render(req,reply.body.contents, templateVars);
+            let enableCache = reply.body.cache === false ?  false : true; //default is true
+            let renderedContents = randomizer.render(req,reply.body.contents, templateVars, enableCache);
 
             res.status(reply.status).send(renderedContents)
         }

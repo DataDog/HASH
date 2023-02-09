@@ -35,6 +35,21 @@ headers:
 | name | the honeypot name | default |
 | port | the application port | 3000 |
 | headers | list of the headers to be exposed | none |
+| disableBuiltIn | list of builtin features you want to disable | none |
+
+### disable builtIn features
+HASH is shipped with some builtIn features like cookie tracking and traps, you can disable anyof them by defining this in your init.yaml file
+
+
+```yaml
+honeypot-name: "service"
+port: 5000
+headers:
+  "Api-Version": 2.1
+  "Server": "Service/5.5.5 (linux)"
+disableBuiltIn:
+  - traps
+```
 
 
 
@@ -75,6 +90,7 @@ requests:
 | -- -- body | the response body | - | No |
 | -- -- -- contents | the content of the response | - | Yes |
 | -- -- -- view | the file containing the view (see: using rendered template) | - | Yes |
+| -- -- -- static | static file rendering | - | Yes |
 
 
 ### Using multiple requests

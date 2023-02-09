@@ -1,8 +1,6 @@
 const log = require('./log')
 const express = require('express')
-const session = require('express-session')
-const cookieParser = require('cookie-parser')
-const mustacheExpress = require('mustache-express'); 
+const mustacheExpress = require('mustache-express');  
 
 const { createLogger, format, transports } = require('winston');
 const { faker } = require('./randomizer')
@@ -13,19 +11,36 @@ module.exports = (config) => {
     const app = express()
 
     log('Init', 'Configuring required middlewares (sessions, bodyparser)')
-    //configure session
-    app.set('trust proxy', 1) // trust first proxy
-    app.use(session({
-        secret: process.env.APP_KEY,
-        resave: false,
-        saveUninitialized: true,
-        name: faker.internet.domainWord(),
-        //cookie: { secure: true } //production only ssl
-    }))
+
+
+    if(config.disableBuiltIn && config.disableBuiltIn.includes('cookies')){
+        log('Init', 'Config: Disable cookies -> Skipping session & cookies management')
+        //simulating session for one request period
+        app.use(function(req, res, next) {
+            req.session = {}
+            next()   
+        })
+    }else{
+        const session = require('express-session')
+        const cookieParser = require('cookie-parser')
+        log('Init', 'Add session cookies')
+        //configure session
+        app.set('trust proxy', 1) // trust first proxy
+        app.use(session({
+            secret: process.env.APP_KEY,
+            resave: false,
+            saveUninitialized: true,
+            name: faker.internet.domainWord(),
+            //cookie: { secure: true } //production only ssl
+        }))
+        app.use(cookieParser())
+    }
+
+    
 
     app.use(express.json()) // for parsing application/json
     app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-    app.use(cookieParser())
+    
 
     log('Init', 'Configure datadog logger')
     //configure logger
@@ -63,8 +78,10 @@ module.exports = (config) => {
         next()
     }
     
-    app.use(datadogLogger)
+    app.use(datadogLogger); 
 
+
+    
 
     log('Init', 'Configure template engine')
     app.engine('mustache', mustacheExpress());
@@ -75,6 +92,7 @@ module.exports = (config) => {
 
     //remove signature
     app.disable('x-powered-by');
+    app.disable('etag');
 
     log('Init', 'Expose global headers' + JSON.stringify(config.headers))
     //add global headers if any
@@ -84,6 +102,7 @@ module.exports = (config) => {
         }
         next();
     });
+
 
     return app;
 }

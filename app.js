@@ -13,12 +13,14 @@ log('App', 'Starting HASH ')
 require('dd-trace').init({
     appsec: true,
     logInjection: true  
-});
+}); 
+ 
+ 
 
+let appName = 'default'; //default app
+//overwrite by environment variable or the cli 
 
-
-
-const appName = process.env.APP_NAME ||  process.argv.slice(2)[0]
+appName = process.env.APP_NAME ||  process.argv.slice(2)[0]
 const app = require('./libs/app')(__dirname, appName)
 
 const config = require('./libs/config')(app.initFile)
@@ -31,18 +33,24 @@ Cache.reset();
 const Template = require('./libs/template');
 
 const template = new Template(app);
-const templates = template.load()
+const { templates, dynamicTemplates } = template.load()
 
 //simulate
 const Simulator = require('./libs/simulator')
-const simulator = new Simulator(app, http, templates)
-simulator.apply()
+const simulator = new Simulator(app, http, templates, dynamicTemplates)
+simulator.apply(config)
+
+//overwrite express error handler
+http.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(200).send('!!')
+});
 
 //default endpoint
 http.get('/', (req,res) => {
     res.render('index')
 })
-
+ 
 
 http.listen(config.port, () => {
     log('App',`${app.name} listening on port ${config.port}`)

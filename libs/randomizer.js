@@ -59,7 +59,7 @@ const Cache = {
 
 
 
-const render = (httpRequest, contents, vars) => {
+const render = (httpRequest, contents, vars, enableCache) => {
     let renderedContents;
 
     //check cache first
@@ -73,7 +73,11 @@ const render = (httpRequest, contents, vars) => {
     renderedContents = fakeIt(contents)
 
     renderedContents = Mustache.render(renderedContents, vars);
-    Cache.set(cacheKey, renderedContents);
+
+    if(enableCache){
+        Cache.set(cacheKey, renderedContents);
+    }
+    
 
     return renderedContents;
 }
