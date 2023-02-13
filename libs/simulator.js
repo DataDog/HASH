@@ -105,7 +105,7 @@ class Simulator{
             res.set(reply.headers)
  
             if(reply.body.static){
-                console.log('Loading FROM', this.app.resourcesDir + "/" +request.reply.body.static)
+                console.log('Loading static file FROM', this.app.resourcesDir + "/" +request.reply.body.static)
                 let staticC = fs.readFileSync(this.app.resourcesDir + "/" +request.reply.body.static)
                 res.status(reply.status).send(staticC)  
                 return; 
@@ -114,8 +114,7 @@ class Simulator{
             let templateVars = Object.assign({
                 params: req.params,
                 body: req.body,
-                query: req.query,
-                dateNow: new Date() 
+                query: req.query
             }, reply.body.vars || {})
             
             

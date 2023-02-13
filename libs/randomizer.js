@@ -5,13 +5,18 @@ const fs = require('fs');
 const path = require("path");
 
 const fakeIt = (string) => { 
-    let stringArr = string.split(/(\${faker[^}]+})/)
+    let stringArr = string.split(/(\$<faker[^>]+>)/)
 
     for (let i = 0; i < stringArr.length; i++) {
         const chunk = stringArr[i];
-        if(chunk.indexOf('${faker.') === 0){
+        if(chunk.indexOf('$<faker.') === 0){
             //found calling to faker, lets parse and excute it;
-            let fakerCall = chunk.replace(/\${([a-zA-Z\.0-9]+)(:([^}]+))?}/, "return this.$1($3)");
+            //let fakerCall = chunk.replace(/\${([a-zA-Z\.0-9]+)(:([^}]+))?}/, "return this.$1($3)");
+
+            //let fakerCall = chunk.replace(/\${([a-zA-Z\.0-9]+)(\(([^\)]+)\))?}/, "return this.$1($3)");
+
+            //let fakerCall = chunk.replace(/\${faker.([a-zA-Z\.0-9:\(\)\{\}\.\s,]+)}/ig, "return this.faker.$1;");
+            let fakerCall = chunk.replace(/\$<faker.([^>]+)>/g, "return this.faker.$1;");
             let res = new Function(fakerCall).apply({faker});
             stringArr[i] = res;
         } 
@@ -58,6 +63,13 @@ const Cache = {
 }
 
 
+//considering non cachable variables
+const replaceUncachableVariables = (content) => {
+    content = content.replace("$<date.iso>", (new Date()).toISOString())
+    content = content.replace("$<date.timestamp>", (new Date()).getUTCSeconds())
+    return content;
+}
+
 
 const render = (httpRequest, contents, vars, enableCache) => {
     let renderedContents;
@@ -66,20 +78,18 @@ const render = (httpRequest, contents, vars, enableCache) => {
     let cacheKey = Cache.key(httpRequest.path);
     let res = Cache.get(cacheKey)
     if(res){
-        return res;
+        return replaceUncachableVariables(res);
     }
 
     //cache not found, create it
     renderedContents = fakeIt(contents)
-
     renderedContents = Mustache.render(renderedContents, vars);
 
     if(enableCache){
         Cache.set(cacheKey, renderedContents);
     }
     
-
-    return renderedContents;
+    return replaceUncachableVariables(renderedContents);
 }
 
 module.exports = {

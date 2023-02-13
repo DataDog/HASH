@@ -66,7 +66,24 @@ Mustache will take care of rendering your content. See the full documentation [h
 
 
 ## FakerJs
-For any fakerJS api just use the following conversion `${faker.class.method:param}`.
-So for example if you want to generate 5 paragraphs, You can use `${faker.lorem.paragraph:5}` which is equilivant to `faker.lorem.paragraph(5)`  
+For any fakerJS api just use the following conversion `$<faker.class.method(param)>`.
+So for example if you want to generate 5 paragraphs, You can use `$<faker.lorem.paragraph(5)>` which is equilivant to `faker.lorem.paragraph(5)`  
 
 Check [FakerJs documentation](https://fakerjs.dev/api/) for the full list of APIs you can use 
+
+
+## dates
+Dates is special componenet, because sometimes it needs to be refreshed with every request and sometime it needs to be static (eg. date in the past)
+
+* static dates
+
+```js
+$<faker.datatype.datetime> //2050-05-15T16:19:19.092Z
+$<faker.date.past(10)> //2013-10-25T21:34:19.488Z
+```
+
+* live date
+```js
+$<date.iso> //2023-02-09T14:24:04.243442922Z
+$<date.timestamp> //4102444800
+```
