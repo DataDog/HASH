@@ -1,4 +1,4 @@
-DATABASE_URL=${faker.internet.ipv4}
-DATABASE_USER=${faker.internet.userName}
-DATABASE_PASSWORD=${faker.internet.password}
-DATABASE_PORT=${faker.helpers.arrayElement:[3306, 5432, 27017]}
+DATABASE_URL=$<faker.internet.ipv4()>
+DATABASE_USER=$<faker.internet.userName()>
+DATABASE_PASSWORD=$<faker.internet.password()>
+DATABASE_PORT=$<faker.helpers.arrayElement([3306, 5432, 27017])>

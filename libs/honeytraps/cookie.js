@@ -1,5 +1,5 @@
 const randomizer = require('../randomizer')
-const log = require('../log')
+const log = require('../log');
 
 module.exports = (http) => {
     //add couple of fake cookies
@@ -7,7 +7,7 @@ module.exports = (http) => {
     let cookie_set = {
         key: randomizer.faker.internet.domainWord(),
         value: randomizer.faker.git.commitSha()
-    }
+    } 
 
    
 
