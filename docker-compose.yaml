@@ -14,7 +14,7 @@ services:
       - DD_API_KEY=${DD_API_KEY}
       - DD_SITE=${DD_SITE:-datadoghq.com}
       - DD_ENV=eslam-local  
-  nodejs:
+  default:
     build:
       context: . 
       dockerfile: Dockerfile
@@ -22,6 +22,29 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     environment:
+      - APP_NAME=${APP_NAME:-default}
+      - DD_AGENT_HOST=agent
+      - DD_TRACE_AGENT_PORT=8126
+      - DD_TRACER_ENABLED=true
+      - DD_APPSEC_ENABLED=true
+      - DD_SERVICE=${DD_SERVICE:-sec-research}
+      - DD_TRACE_DEBUG=true
+      - DD_ENV=eslam-local  
+    tty: true
+    depends_on:
+      agent:
+        condition: service_healthy
+    ports:
+       - 8081:3000
+  default_dev:
+    build:
+      context: . 
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - APP_NAME=${APP_NAME:-default}
       - DD_AGENT_HOST=agent
       - DD_TRACE_AGENT_PORT=8126
       - DD_TRACER_ENABLED=true
