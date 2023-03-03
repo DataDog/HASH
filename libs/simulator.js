@@ -75,12 +75,26 @@ class Simulator{
  
 
         switch (expect.method){
-            //TODO: add more http methods
+            case 'ALL':
+                this.http.all(expect.path, this.handler(request, template, expect))
+                break;
             case 'GET':
                 this.http.get(expect.path, this.handler(request, template, expect))
                 break;
+            case 'HEAD':
+                this.http.head(expect.path, this.handler(request, template, expect))
+                break;
             case 'POST':
                 this.http.post(expect.path, this.handler(request, template, expect))
+                break;
+            case 'PUT':
+                this.http.put(expect.path, this.handler(request, template, expect))
+                break;
+            case 'DELETE':
+                this.http.delete(expect.path, this.handler(request, template, expect))
+                break;
+            case 'patch':
+                this.http.delete(expect.path, this.handler(request, template, expect))
                 break;
         }
     }
