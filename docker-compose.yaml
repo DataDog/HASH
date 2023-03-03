@@ -13,14 +13,11 @@ services:
       - DD_APM_NON_LOCAL_TRAFFIC=true
       - DD_API_KEY=${DD_API_KEY}
       - DD_SITE=${DD_SITE:-datadoghq.com}
-      - DD_ENV=eslam-local  
+      - DD_ENV=prod  
   default:
     build:
       context: . 
       dockerfile: Dockerfile
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
     environment:
       - APP_NAME=${APP_NAME:-default}
       - DD_AGENT_HOST=agent
@@ -28,8 +25,8 @@ services:
       - DD_TRACER_ENABLED=true
       - DD_APPSEC_ENABLED=true
       - DD_SERVICE=${DD_SERVICE:-sec-research}
-      - DD_TRACE_DEBUG=true
-      - DD_ENV=eslam-local  
+      - DD_TRACE_DEBUG=false
+      - DD_ENV=prod  
     tty: true
     depends_on:
       agent:
@@ -50,8 +47,8 @@ services:
       - DD_TRACER_ENABLED=true
       - DD_APPSEC_ENABLED=true
       - DD_SERVICE=${DD_SERVICE:-sec-research}
-      - DD_TRACE_DEBUG=true
-      - DD_ENV=eslam-local  
+      - DD_TRACE_DEBUG=false
+      - DD_ENV=dev  
     tty: true
     depends_on:
       agent:
