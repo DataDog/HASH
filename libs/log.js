@@ -7,7 +7,6 @@ let log =  (module, message, level = 'log' ) => {
     if(level == 'warning') msg += chalk.magenta('%s: ') + chalk.yellow('%s: %s');
     if(level == 'error') msg += chalk.magenta('%s: ') + chalk.red('%s: %s');
 
-    // msg += chalk.grey(module);
     console.log(msg, module, message)
 }
 

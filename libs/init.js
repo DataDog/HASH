@@ -59,18 +59,23 @@ module.exports = (config) => {
         ],
     });
 
+    logger.add(new transports.Console({
+        level: 'info'
+    }));
+
+
     const datadogLogger = function (req, res, next) {
         app.logger = (id, title, info) => {
-            logger.info('APPSEC HONEYPOT:' + title,{
+            logger.warn('HASH: ' + req.method + ' ' + req.path + ': ' + title,{
                 templateId: id,
                 info,
                 request:{
                     path:  req.path,
                     method: req.method,                
-                    query: req.query,
-                    params: req.params,
-                    body: req.body,
-                    cookies: req.cookies,
+                    query: req.query || {},
+                    params: req.params || {},
+                    body: req.body || {},
+                    headers: {...req.headers,...{"cookie_parsed":req.cookies}},
                     ip: req.ip
                 }
             });
@@ -91,18 +96,19 @@ module.exports = (config) => {
     app.set('views', __dirname + '/../views');
 
     //remove signature
-    app.disable('x-powered-by');
+    app.disable('x-powered-by'); 
     app.disable('etag');
 
-    log('Init', 'Expose global headers' + JSON.stringify(config.headers))
-    //add global headers if any
-    app.use(function(req, res, next) {
-        for (const header in config.headers) {
-            res.setHeader(header, config.headers[header])
-        }
-        next();
-    });
-
-
+    if(config.headers && Object.keys(config.headers).length > 0){
+        log('Init', 'Expose global headers ' + JSON.stringify(config.headers))
+        //add global headers if any
+        app.use(function(req, res, next) {
+            for (const header in config.headers) {
+                res.setHeader(header, config.headers[header])
+            }
+            next();
+        });
+    }
+    
     return app;
 }
