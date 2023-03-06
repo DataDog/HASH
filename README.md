@@ -23,10 +23,12 @@ HASH is built using Node.js but it can mimic any web based language / server bas
 
 ```
 Debug=false
-APP_KEY=<app key>
-APP_NAME=default # Application name (must be in this location apps/<yourapp>)
-DD_SERVICE=<Service name>
-DD_API_KEY=<Datadog API KEY> # Datadog api key
+APP_KEY=<app key> #randomize key used internally
+APP_NAME=default
+SERVICE_NAME=<Service name> 
+LOG_TRANSPORTS=console,files,datadog #logs transports, only one is required and others are optional
+LOG_FILE=hash.log #required if you are using files as log transport 
+DD_API_KEY=<Datadog API KEY> #required only if you are sending logs to datadog
 ```
 
 2. Install dependencies
