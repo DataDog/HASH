@@ -1,5 +1,4 @@
 const fs = require('fs')
-const log = require('./log')
 module.exports = (basedir, name) => {
     const appDir = basedir + '/apps/' + name;
     const initFile = appDir + '/init.yaml';
@@ -11,8 +10,7 @@ module.exports = (basedir, name) => {
     if (!fs.existsSync(initFile)) { console.log("Error: Init file: `"+initFile+"` not exists"); process.exit(1); }
     if (!fs.existsSync(templatesDir)) { console.log("Error: Template directory: `"+appDir+"` not exists"); process.exit(1); }
     if (!fs.existsSync(resourcesDir)) { console.log("Error: Template Resources directory: `"+appDir+"` not exists"); process.exit(1); }
-
-    log('App', 'Loading Application: '+name)
+    
     return {
         name,
         initFile,

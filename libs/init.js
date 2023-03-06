@@ -1,114 +1,92 @@
-const log = require('./log')
 const express = require('express')
 const mustacheExpress = require('mustache-express');  
 
-const { createLogger, format, transports } = require('winston');
+
 const { faker } = require('./randomizer')
 
-module.exports = (config) => {
-    log('Init', 'Starting the server config')
+module.exports = (app) => {
+    app.logger.info('Init -> Starting the server config')
 
-    const app = express()
+    const exp = express()
 
-    log('Init', 'Configuring required middlewares (sessions, bodyparser)')
+    app.logger.info('Init -> Configuring required middlewares (sessions, bodyparser)')
 
 
-    if(config.disableBuiltIn && config.disableBuiltIn.includes('cookies')){
-        log('Init', 'Config: Disable cookies -> Skipping session & cookies management')
+    if(app.config.disableBuiltIn && app.config.disableBuiltIn.includes('cookies')){
+        app.logger.info('Init', 'Config: Disable cookies -> Skipping session & cookies management')
         //simulating session for one request period
-        app.use(function(req, res, next) {
+        exp.use(function(req, res, next) {
             req.session = {}
             next()   
         })
     }else{
         const session = require('express-session')
         const cookieParser = require('cookie-parser')
-        log('Init', 'Add session cookies')
+        app.logger.info('Init -> Add session cookies')
         //configure session
-        app.set('trust proxy', 1) // trust first proxy
-        app.use(session({
+        exp.set('trust proxy', 1) // trust first proxy
+        exp.use(session({
             secret: process.env.APP_KEY,
             resave: false,
             saveUninitialized: true,
             name: faker.internet.domainWord(),
             //cookie: { secure: true } //production only ssl
         }))
-        app.use(cookieParser())
+        exp.use(cookieParser())
     }
 
     
 
-    app.use(express.json()) // for parsing application/json
-    app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+    exp.use(express.json()) // for parsing application/json
+    exp.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
     
 
-    log('Init', 'Configure datadog logger')
-    //configure logger
-    const httpTransportOptions = {
-        host: 'http-intake.logs.datadoghq.com',
-        path: '/api/v2/logs?dd-api-key='+process.env.DD_API_KEY+'&ddsource=nodejs&service='+process.env.DD_SERVICE,
-        ssl: true
-    };
-    
-    const logger = createLogger({
-        level: 'info',
-        exitOnError: false,
-        format: format.json(),
-        transports: [
-            new transports.Http(httpTransportOptions),
-        ],
-    });
-
-    logger.add(new transports.Console({
-        level: 'info'
-    }));
-
-
-    const datadogLogger = function (req, res, next) {
-        app.logger = (id, title, info) => {
-            logger.warn('HASH: ' + req.method + ' ' + req.path + ': ' + title,{
+    app.logger.info('Init -> Configure datadog logger')
+    const middlewareLogger = function (req, res, next) {
+        exp.logger = (id, title, info) => {
+            app.logger.warn('HASH: ' + req.method + ' ' + req.originalUrl + ': ' + title,{
+                type: "malicious",
                 templateId: id,
                 info,
-                request:{
+                http:{
+                    client_ip: req.ip,
+                    host: req.headers.host,
+                    method: req.method,
                     path:  req.path,
-                    method: req.method,                
+                },
+                request:{         
                     query: req.query || {},
                     params: req.params || {},
                     body: req.body || {},
                     headers: {...req.headers,...{"cookie_parsed":req.cookies}},
-                    ip: req.ip
                 }
             });
         }
         next()
     }
     
-    app.use(datadogLogger); 
+    exp.use(middlewareLogger); 
 
+    app.logger.info('Init -> Configure template engine')
+    exp.engine('mustache', mustacheExpress());
 
-    
-
-    log('Init', 'Configure template engine')
-    app.engine('mustache', mustacheExpress());
-
-
-    app.set('view engine', 'mustache');
-    app.set('views', __dirname + '/../views');
+    exp.set('view engine', 'mustache');
+    exp.set('views', __dirname + '/../views');
 
     //remove signature
-    app.disable('x-powered-by'); 
-    app.disable('etag');
+    exp.disable('x-powered-by'); 
+    exp.disable('etag');
 
-    if(config.headers && Object.keys(config.headers).length > 0){
-        log('Init', 'Expose global headers ' + JSON.stringify(config.headers))
+    if(app.config.headers && Object.keys(app.config.headers).length > 0){
+        app.logger.info('Init -> Expose global headers ' + JSON.stringify(config.headers))
         //add global headers if any
-        app.use(function(req, res, next) {
+        exp.use(function(req, res, next) {
             for (const header in config.headers) {
                 res.setHeader(header, config.headers[header])
             }
             next();
         });
     }
-    
-    return app;
+
+    return exp;
 }

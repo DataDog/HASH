@@ -18,10 +18,9 @@ class Simulator{
         this.dynamicTemplates = dynamicTemplates
     }
 
-    apply(config){ 
+    apply(){ 
         //built-in modules
-        //TODO: check config
-        this.builtinModules(config)
+        this.builtinModules(this.app.config)
 
         for (let index = 0; index < this.dynamicTemplates.length; index++) {
             this.mockDynamicRequest(this.dynamicTemplates[index]);
@@ -31,9 +30,6 @@ class Simulator{
             //check if its dynamic js file
             this.mockTemplate(this.templates[index])
         }
-
-        
-
     }
 
     builtinModules(config){
@@ -42,16 +38,14 @@ class Simulator{
             return;
         }
         //load internal honeytraps
-        //TODO: enable/disable internal module by config
         honeytraps.robots(this.http);
         honeytraps.exposedFiles(this.http)
         honeytraps.cookies(this.http)
-        
     }
 
 
     mockDynamicRequest(template){
-        log('Simulator', 'Mocking Dynamic request '+ template) 
+        this.app.logger.info('Simulator -> Mocking Dynamic request '+ template) 
         require(template)(this.http);
     }
 
@@ -65,7 +59,7 @@ class Simulator{
 
     mockRequest(request, template){ 
         let expect = request.expect;
-        log('Simulator', 'Mocking request '+ template.id)
+        this.app.logger.info('Simulator -> Mocking request '+ template.id)
         
         //parse reply 
         if(request.reply.body.view){
@@ -106,20 +100,20 @@ class Simulator{
             
             //if this a trap mark the full session as malicious
             if(request.isTrap){
-                log('Simulator', 'Trap hit, marking the session as malicious ', 'warning')
+                //TODO: mention trap name
+                this.app.logger.info('Simulator -> Trap hit, marking the session as malicious ')
                 req.session.isMalicious = true
             }
  
-            //report the malicious activities to DD
+            //report the malicious activities
             if(req.session.isMalicious){
                 this.http.logger(template.id, template.info.title, template.info)
             }
 
-            
             res.set(reply.headers)
  
             if(reply.body.static){
-                console.log('Loading static file FROM', this.app.resourcesDir + "/" +request.reply.body.static)
+                this.app.logger.info('Simulator -> Loading static file FROM ' +  this.app.resourcesDir + "/" +request.reply.body.static)
                 let staticC = fs.readFileSync(this.app.resourcesDir + "/" +request.reply.body.static)
                 res.status(reply.status).send(staticC)  
                 return; 

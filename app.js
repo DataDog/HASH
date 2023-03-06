@@ -1,5 +1,6 @@
 require('dotenv').config()
-const log = require('./libs/log')
+const logger = require('./libs/log');
+
 const figlet = require('figlet');
 const chalk = require('chalk')
 console.log('-----------------------------------')
@@ -8,23 +9,22 @@ console.log(
 )
 console.log(' HTTP Agnostic Software Honeypot ')
 console.log('-----------------------------------')
-log('App', 'Starting HASH ')
-// Init datadog tracer.
-require('dd-trace').init({
-    appsec: true,
-    logInjection: true  
-}); 
- 
- 
+logger.info('App -> Starting HASH ')
 
+ 
+ 
 let appName = 'default'; //default app
 //overwrite by environment variable or the cli 
 
 appName = process.env.APP_NAME ||  process.argv.slice(2)[0]
+logger.info('App -> Loading Application: ' + appName)
 const app = require('./libs/app')(__dirname, appName)
+app.logger = logger;
 
-const config = require('./libs/config')(app.initFile)
-const http = require('./libs/init')(config);
+const config = require('./libs/config')(app)
+app.config = config;
+
+const http = require('./libs/init')(app);
 
 const { Cache } = require('./libs/randomizer')
 Cache.reset();
@@ -38,11 +38,11 @@ const { templates, dynamicTemplates } = template.load()
 //simulate
 const Simulator = require('./libs/simulator')
 const simulator = new Simulator(app, http, templates, dynamicTemplates)
-simulator.apply(config)
+simulator.apply()
 
 //overwrite express error handler
 http.use((err, req, res, next) => {
-    console.error(err.stack)
+    logger.error('HTTP -> 500 error: ' + err.message, {stack: err.stack})
     res.status(200).send('!!')
 });
 
@@ -50,8 +50,8 @@ http.use((err, req, res, next) => {
 http.get('/', (req,res) => {
     res.render('index')
 })
- 
+  
 
 http.listen(config.port, () => {
-    log('App',`${app.name} listening on port ${config.port}`)
+    logger.info(`App -> ${app.name} listening on port ${config.port}`)
 })

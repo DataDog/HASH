@@ -1,14 +1,55 @@
-const chalk = require('chalk');
+//const chalk = require('chalk');
 
-let log =  (module, message, level = 'log' ) => {
-    if(process.env.Debug === false) return;
-    let msg = "";
-    if(level == 'log') msg += chalk.magenta('%s: ') + chalk.green('%s');
-    if(level == 'warning') msg += chalk.magenta('%s: ') + chalk.yellow('%s: %s');
-    if(level == 'error') msg += chalk.magenta('%s: ') + chalk.red('%s: %s');
+const winston = require('winston')
+const availableTransports = {
+    "console": () => {
+        return new winston.transports.Console({
+            format: winston.format.combine(
+                winston.format.colorize(),
+                winston.format.simple()
+            )
+        })
+    },
+    "file": () => {
+        return new winston.transports.File({
+            filename: process.env.LOG_FILE,
+        });
+    },
+    "datadog" : () => {
+        require('dd-trace').init({
+            appsec: true,
+            logInjection: true,
+            service: process.env.SERVICE_NAME
+        }); 
+        return new winston.transports.Http({
+            host: 'http-intake.logs.datadoghq.com',
+            path: '/api/v2/logs?dd-api-key='+process.env.DD_API_KEY+'&ddsource=nodejs&service='+process.env.SERVICE_NAME,
+            ssl: true
+        })
+    },
+}
 
-    console.log(msg, module, message)
+const logger = winston.createLogger({
+    level: 'info',
+    exitOnError: false,
+    format: winston.format.json()
+});
+
+
+//parse the logs transports
+let transports = process.env.LOG_TRANSPORTS ? process.env.LOG_TRANSPORTS.split(',') : [];
+
+for (const transport of transports) {
+
+    if(availableTransports[transport]){
+        console.log('Enable log transport : ', transport)
+        logger.add(availableTransports[transport]())
+    }else{
+        console.log('Transport %s not supported', transport)
+    }
+
+    console.log(transport)
 }
 
 
-module.exports = log;
+module.exports = logger;

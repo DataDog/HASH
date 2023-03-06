@@ -1,15 +1,15 @@
 const fs = require('fs')
 const path = require('path');
 const yaml = require('js-yaml');
-const log = require('./log')
 
 
 class Template{
     constructor(app){
         this.dir = app.templatesDir
+        this.logger = app.logger
     }
     load(){
-        log('Template', 'loading request templates from: '+this.dir);
+        this.logger.info('Template -> loading request templates from: '+this.dir);
         const dirents = fs.readdirSync(this.dir, { withFileTypes: true });
         const filesNames = dirents
         .filter(dirent => dirent.isFile())
@@ -33,7 +33,7 @@ class Template{
             if(ext != '.yaml' && ext != '.yml') continue; //unsupported file format 
             try {
                 let doc = yaml.load(fs.readFileSync(this.dir + '/' + template, 'utf8')); 
-                log('Template', 'loading template: '+template +' success ')
+                this.logger.info('Template -> loading template: '+template +' success ')
 
                 if(template == '404.yaml' || template == '404.yml'){
                     specialTemplates.push(doc)
@@ -41,9 +41,8 @@ class Template{
                 }
                 templates.push(doc)
             } catch (e) {
-                
-                log('Template', 'loading template: '+template +' Failed ', 'warning')
-                log('Template', e, 'warning')
+                this.logger.error('Template -> loading template: '+template +' Failed ')
+                this.logger.error('Template -> ' +  e)
             }
         }
 
