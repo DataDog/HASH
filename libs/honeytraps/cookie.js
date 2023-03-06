@@ -1,5 +1,5 @@
 const randomizer = require('../randomizer')
-const log = require('../log');
+
 
 module.exports = (http) => {
     //add couple of fake cookies
@@ -8,8 +8,6 @@ module.exports = (http) => {
         key: randomizer.faker.internet.domainWord(),
         value: randomizer.faker.git.commitSha()
     } 
-
-   
 
     http.use(function(req, res, next) {
         //if not exists create it
@@ -23,7 +21,6 @@ module.exports = (http) => {
 
         if(req.cookies && req.cookies[cookie_set.key] != cookie_set.value){
             //cookie manipulated
-            log('Simulator', 'Cookie trap hit, marking the session as malicious' + req.cookies[cookie_set.key], 'warning')
             req.session.isMalicious = true
         }
 

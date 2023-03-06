@@ -78,11 +78,11 @@ module.exports = (app) => {
     exp.disable('etag');
 
     if(app.config.headers && Object.keys(app.config.headers).length > 0){
-        app.logger.info('Init -> Expose global headers ' + JSON.stringify(config.headers))
+        app.logger.info('Init -> Expose global headers ' + JSON.stringify(app.config.headers))
         //add global headers if any
         exp.use(function(req, res, next) {
-            for (const header in config.headers) {
-                res.setHeader(header, config.headers[header])
+            for (const header in app.config.headers) {
+                res.setHeader(header, app.config.headers[header])
             }
             next();
         });

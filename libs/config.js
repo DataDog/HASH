@@ -8,7 +8,7 @@ const defaultConfig = {
 
 module.exports = (app) => {
     try {
-        let config = yaml.load(fs.readFileSync(app.configFile, 'utf8'));
+        let config = yaml.load(fs.readFileSync(app.initFile, 'utf8'));
         app.logger.info('Config -> loading main config')
         return config;
     } catch (e) {

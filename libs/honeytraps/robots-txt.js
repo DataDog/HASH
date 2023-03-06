@@ -1,6 +1,5 @@
 const fs = require('fs')
 const randomizer = require('../randomizer')
-const log = require('../log')
 
 module.exports = (http) => {
 
@@ -15,7 +14,6 @@ module.exports = (http) => {
 
     http.get('/[cd]/*', (req,res) => {
         //if accessed, this request is malicious
-        log('Simulator', 'Robots.txt trap hit, marking the session as malicious', 'warning')
         req.session.isMalicious = true
         res.status(500).send("Internal Server Error")
     })
