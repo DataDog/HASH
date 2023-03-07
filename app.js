@@ -10,8 +10,6 @@ console.log(
 console.log(' HTTP Agnostic Software Honeypot ')
 console.log('-----------------------------------')
 logger.info('App -> Starting HASH ')
-
- 
  
 let appName = 'default'; //default app
 //overwrite by environment variable or the cli 
@@ -21,37 +19,37 @@ logger.info('App -> Loading Application: ' + appName)
 const app = require('./libs/app')(__dirname, appName)
 app.logger = logger;
 
-const config = require('./libs/config')(app)
+const config = require('./libs/config')(app);
 app.config = config;
 
 const http = require('./libs/init')(app);
 
-const { Cache } = require('./libs/randomizer')
+const { Cache } = require('./libs/randomizer');
 Cache.reset();
 
 //loading templates
 const Template = require('./libs/template');
 
 const template = new Template(app);
-const { templates, dynamicTemplates } = template.load()
+const { templates, dynamicTemplates } = template.load();
 
-//simulate
-const Simulator = require('./libs/simulator')
-const simulator = new Simulator(app, http, templates, dynamicTemplates)
+//simulate  
+const Simulator = require('./libs/simulator');
+const simulator = new Simulator(app, http, templates, dynamicTemplates);
 simulator.apply()
 
 //overwrite express error handler
 http.use((err, req, res, next) => {
-    logger.error('HTTP -> 500 error: ' + err.message, {stack: err.stack})
-    res.status(200).send('!!')
+    logger.error('HTTP -> 500 error: ' + err.message, {stack: err.stack});
+    res.status(200).send('!!');
 });
 
 //default endpoint
 http.get('/', (req,res) => {
-    res.render('index')
+    res.send('Hello, World');
 })
-  
+
 
 http.listen(config.port, () => {
-    logger.info(`App -> ${app.name} listening on port ${config.port}`)
+    logger.info(`App -> ${app.name} listening on port ${config.port}`);
 })
