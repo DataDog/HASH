@@ -1,3 +1,4 @@
 honeypot-name: "default"
 port: 3000
 headers:
+  "Server": "nginx"

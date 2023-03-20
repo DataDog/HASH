@@ -31,7 +31,7 @@ const http = require('./libs/init')(app);
 const { Cache } = require('./libs/randomizer');
 Cache.reset();
 
-//reset cache every 10 min (1000 * 60 * 10)
+//reset cache every 10 min (1000 * 60 * 10) 
 setInterval(() => {
     Cache.reset();
 }, 600000);

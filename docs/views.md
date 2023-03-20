@@ -8,26 +8,34 @@ Example template
 
 ```json
 {
-  "login": "${faker.lorem.slug}",
+  "login": "$<faker.lorem.slug()>",
   "id": {{ params.userId }},
-  "node_id": "${faker.datatype.uuid}",
-  "avatar_url": "${faker.internet.avatar}",
-  "gravatar_id": "${faker.datatype.uuid}",
-  "url": "${faker.internet.url}",
-  "html_url": "${faker.internet.url}",
-  "type": "User",
-  "site_admin": ${faker.datatype.boolean},
-  "name": "${faker.name.fullName}",
-  "company": "${faker.company.name}",
+  "node_id": "$<faker.datatype.uuid()>",
+  "avatar_url": "$<faker.internet.avatar()>",
+  "gravatar_id": "$<faker.datatype.uuid()>",
+  "url": "$<faker.internet.url()>",
+  "html_url": "$<faker.internet.url()>",
+  "type": "user",
+  "site_admin": $<faker.datatype.boolean()>,
+  "name": "$<faker.name.fullName()>",
+  "company": "$<faker.company.name()>",
   "blog": "https://github.com/blog",
-  "location": "${faker.address.country}",
-  "email": "${faker.internet.email}",
-  "hireable": ${faker.datatype.boolean},
-  "bio": "${faker.lorem.paragraphs:3}"
+  "location": "$<faker.address.country()>",
+  "email": "$<faker.internet.email()>",
+  "hireable": $<faker.datatype.boolean()>,
+  "bio": "$<faker.lorem.paragraphs(2)>"
 }
 ```
 
-## Mustache
+
+## Randomization via FakerJS
+For any fakerJS api just use the following conversion `$<faker.class.method(param)>`.
+So for example if you want to generate 5 paragraphs, You can use `$<faker.lorem.paragraph(5)>` which is equilivant to `faker.lorem.paragraph(5)`  
+
+Check [FakerJs documentation](https://fakerjs.dev/api/) for the full list of APIs you can use 
+
+
+## Template via Mustache
 For Mustache syntax use the standard `{{`  `}}` to wrap the dynamic contents. And you can set the template variable inside request templates in `reply.body.vars`
 
 example:
@@ -65,12 +73,6 @@ And in the template
 Mustache will take care of rendering your content. See the full documentation [here](https://mustache.github.io/mustache.5.html)
 
 
-## FakerJs
-For any fakerJS api just use the following conversion `$<faker.class.method(param)>`.
-So for example if you want to generate 5 paragraphs, You can use `$<faker.lorem.paragraph(5)>` which is equilivant to `faker.lorem.paragraph(5)`  
-
-Check [FakerJs documentation](https://fakerjs.dev/api/) for the full list of APIs you can use 
-
 
 ## dates
 Dates is special componenet, because sometimes it needs to be refreshed with every request and sometime it needs to be static (eg. date in the past)
@@ -78,7 +80,7 @@ Dates is special componenet, because sometimes it needs to be refreshed with eve
 * static dates
 
 ```js
-$<faker.datatype.datetime> //2050-05-15T16:19:19.092Z
+$<faker.datatype.datetime()> //2050-05-15T16:19:19.092Z
 $<faker.date.past(10)> //2013-10-25T21:34:19.488Z
 ```
 
