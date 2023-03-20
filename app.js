@@ -1,20 +1,24 @@
 require('dotenv').config()
-const logger = require('./libs/log');
+
 
 const figlet = require('figlet');
-const chalk = require('chalk')
+const chalk = require('chalk');
 console.log('-----------------------------------')
 console.log(
     figlet.textSync('HASH', { horizontalLayout: 'full' })
-)
-console.log(' HTTP Agnostic Software Honeypot ')
-console.log('-----------------------------------')
-logger.info('App -> Starting HASH ')
+);
+console.log(' HTTP Agnostic Software Honeypot ');
+console.log('-----------------------------------');
+const logger = require('./libs/log');
+
+
+logger.info('App -> Starting HASH ');
  
 let appName = 'default'; //default app
 //overwrite by environment variable or the cli 
+appName = process.env.APP_NAME ||  process.argv.slice(2)[0];
 
-appName = process.env.APP_NAME ||  process.argv.slice(2)[0]
+
 logger.info('App -> Loading Application: ' + appName)
 const app = require('./libs/app')(__dirname, appName)
 app.logger = logger;

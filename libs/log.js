@@ -40,15 +40,12 @@ const logger = winston.createLogger({
 let transports = process.env.LOG_TRANSPORTS ? process.env.LOG_TRANSPORTS.split(',') : [];
 
 for (const transport of transports) {
-
     if(availableTransports[transport]){
-        console.log('Enable log transport : ', transport)
-        logger.add(availableTransports[transport]())
+        logger.add(availableTransports[transport]());
+        logger.info('Log -> Enable log transport: ' + transport);
     }else{
-        console.log('Transport %s not supported', transport)
+        logger.error('Log -> log transport "' + transport + '" not found.');
     }
-
-    console.log(transport)
 }
 
 
