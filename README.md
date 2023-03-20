@@ -1,6 +1,9 @@
 # HASH (HTTP Agnostic Software Honeypot)
 Hash is a framework for creating and launching low interactive honeypots. 
 
+
+![HASH](./docs/hash-intro.png "HASH")
+
 # 🌟 Why HASH?
 The main philosophy of HASH is to be easy to configure and flexible to mimic any software running on HTTP/HTTPs. With the minimum footprint possible to avoid being detected.
 
