@@ -13,8 +13,8 @@ The main philosophy of HASH is to be easy to configure and flexible to mimic any
 * Single framework to deploy HTTP/HTTPs based honeypots
 * Easily configurable via YAML files
 * Built-in honeytraps
-* Out-of-the box integration with Datadog to review the honeypot logs
 * Powerful randomization based on `fakerjs` to avoid honeypot detection
+* Optionally, integration with Datadog to ingest and analyze honeypots logs and HTTP requests through APM
 
 
 # 🚀 Getting Started
@@ -26,7 +26,6 @@ HASH is built using Node.js but it can mimic any web based language / server bas
 1. Copy `.env.example` to `.env` and add your secrets
 
 ```
-Debug=false
 HONEYPOT_PROFILE=default
 
 # Available log transports, at least one is required
