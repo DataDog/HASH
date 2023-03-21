@@ -5,7 +5,7 @@ Hash is a framework for creating and launching low interactive honeypots.
 ![HASH](./docs/hash-intro.png "HASH")
 
 # 🌟 Why HASH?
-The main philosophy of HASH is to be easy to configure and flexible to mimic any software running on HTTP/HTTPs. With the minimum footprint possible to avoid being detected.
+The main philosophy of HASH is to be easy to configure and flexible to mimic any software running on HTTP/HTTPs. With the minimum footprint possible to avoid being detected as honeypot.
 
 
 # ⚡ Features
@@ -14,12 +14,11 @@ The main philosophy of HASH is to be easy to configure and flexible to mimic any
 * Easily configurable via YAML files
 * Built-in honeytraps
 * Out-of-the box integration with Datadog to review the honeypot logs
-* Fully randomize capabilities based on `fakerJS`
+* Powerful randomization based on `fakerjs` to avoid honeypot detection
 
 
 # 🚀 Getting Started
 HASH is built using Node.js but it can mimic any web based language / server based on the configuration. Read the full docs here:
-
 
 
 ## Installation
@@ -96,16 +95,7 @@ Read the config documentation [here](./docs/config.md)
 
 
 ## Future work
+- [ ] Create examples folder to show HASH features
 - [ ] Add unit & integration tests 
 - [ ] Ability to import API documentation formats (swagger, postman ..etc)
 - [ ] Package hash as module for easier distribution
-- [ ]
-
-
-## License and Contribution
-TBD
-
-
-
-## Contacts
-TBD

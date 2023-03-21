@@ -1,11 +1,54 @@
-# Template views
-HASH is using [Mustache](https://mustache.github.io) to handle the view rendering, So basically you can use Mustache capabilities to render the views
+# Views rendering
+Views are stored in `templates/resources`, you can store any kind of files there `html`, `json`, `xml` ...etc and your static assets as well `css`, `js`, `favicon` ..etc
 
-Beside Mustache, HASH also support randomized contents using [fakerJs](https://fakerjs.dev)
+You can use it easily like this in your request templates
 
+> `templates/example1.yaml`
+```yaml
+id: view-example
+info:
+    title: "View Example"
+requests:
+  - expect:
+      method: GET
+      path: '/articles'
+    reply:
+      status: 200
+      headers:
+        content-type: "text/html"
+      body: 
+        view: "articles.html" #<- the name of the file
+```
+
+If you want to use static file (no randomization of content or any text processing) just use the property `static` 
+
+> `templates/example2.yaml`
+```yaml
+id: favicon-example
+info:
+    title: "favicon Example"
+requests:
+  - expect:
+      method: ALL
+      path: '/favicon.ico'
+    reply:
+      status: 200
+      headers:
+        content-type: "image/x-icon"
+      body: 
+        static: "favicon.ico" #<- the name of the file
+```
+
+> note: make sure to use the correct content-type if you want to make it work properly in the browser
+
+
+## Randomization via FakerJS
+
+In order to make it realistic enough and avoid being detected as honeypot, HASH support content randomization using [fakerJs](https://fakerjs.dev)
 
 Example template
 
+> `templates/resources/user-api.json`
 ```json
 {
   "login": "$<faker.lorem.slug()>",
@@ -28,7 +71,7 @@ Example template
 ```
 
 
-## Randomization via FakerJS
+
 For any fakerJS api just use the following conversion `$<faker.class.method(param)>`.
 So for example if you want to generate 5 paragraphs, You can use `$<faker.lorem.paragraph(5)>` which is equilivant to `faker.lorem.paragraph(5)`  
 
@@ -36,10 +79,13 @@ Check [FakerJs documentation](https://fakerjs.dev/api/) for the full list of API
 
 
 ## Template via Mustache
+HASH is using [Mustache](https://mustache.github.io) to handle the view rendering, So basically you can use Mustache capabilities to render the views
+
 For Mustache syntax use the standard `{{`  `}}` to wrap the dynamic contents. And you can set the template variable inside request templates in `reply.body.vars`
 
-example:
+Example:
 
+> `templates/articles.yaml`
 ```yaml
 id: view-example
 info:
@@ -63,8 +109,10 @@ requests:
             - title: contact
               link: "/contact"
 ```
+
 And in the template 
 
+> `templates/resources/articles.html`
 ```html
 {{#links}}
 <a href="{{ link }}">{{title}}</a>

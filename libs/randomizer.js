@@ -11,11 +11,6 @@ const fakeIt = (string) => {
         const chunk = stringArr[i];
         if(chunk.indexOf('$<faker.') === 0){
             //found calling to faker, lets parse and excute it;
-            //let fakerCall = chunk.replace(/\${([a-zA-Z\.0-9]+)(:([^}]+))?}/, "return this.$1($3)");
-
-            //let fakerCall = chunk.replace(/\${([a-zA-Z\.0-9]+)(\(([^\)]+)\))?}/, "return this.$1($3)");
-
-            //let fakerCall = chunk.replace(/\${faker.([a-zA-Z\.0-9:\(\)\{\}\.\s,]+)}/ig, "return this.faker.$1;");
             let fakerCall = chunk.replace(/\$<faker.([^>]+)>/g, "return this.faker.$1;");
             let res = new Function(fakerCall).apply({faker});
             stringArr[i] = res;
