@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "prettier": "./node_modules/prettier/bin-prettier.js --write './**/*.js'",
         "prettier-check": "./node_modules/prettier/bin-prettier.js --check --ignore-unknown",
-        "generate-third-party-licenses": "./node_modules/license-checker/bin/license-checker --csv > LICENSE-3rdparty.csv"
+        "generate-third-party-licenses": "./node_modules/license-checker/bin/license-checker --csv --customPath .license-checker.json > LICENSE-3rdparty.csv"
     },
     "author": "",
     "license": "ISC",
