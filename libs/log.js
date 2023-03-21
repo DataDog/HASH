@@ -45,6 +45,7 @@ for (const transport of transports) {
         logger.info('Log -> Enable log transport: ' + transport);
     }else{
         logger.error('Log -> log transport "' + transport + '" not found.');
+        process.exit(1);
     }
 }
 
