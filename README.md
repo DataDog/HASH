@@ -1,6 +1,6 @@
 # HASH (HTTP Agnostic Software Honeypot)
-Hash is a framework for creating and launching low interactive honeypots. 
 
+HASH is a framework for creating and launching low interactive honeypots. 
 
 ![HASH](./docs/hash-intro.png "HASH")
 
@@ -18,7 +18,7 @@ The main philosophy of HASH is to be easy to configure and flexible to mimic any
 
 
 # 🚀 Getting Started
-HASH is built using Node.js but it can mimic any web based language / server based on the configuration. Read the full docs here:
+HASH is built using Node.js but it can mimic any web based language / server based on the configuration. Read the full docs below.
 
 
 ## Installation
@@ -60,12 +60,13 @@ npm install
 ```
 node app.js
 ```
-> For production grade deployment explore running with PM2 or advanced deployment with Docker & Kubernetes
+
+> For production grade deployment, explore running it with PM2 or on Kubernetes.
 
 
 ## Customization and configuration
 
-You can customize the default application in `profiles/default` or create a new application `profiles/<your-app>`
+You can customize the default honeypot profile in `profiles/default` or create a new profile `profiles/<your-profile>`
 
 Example request template:
 
@@ -105,3 +106,11 @@ Read the config documentation [here](./docs/config.md)
 - [ ] Add unit & integration tests 
 - [ ] Ability to import API documentation formats (swagger, postman ..etc)
 - [ ] Package hash as module for easier distribution
+
+## License and Contribution
+
+Released under the Apache-2.0 license, contributions are welcome!
+
+## Contacts
+
+Feel free to open an issue, or reach out at securitylabs@datadoghq.com.
