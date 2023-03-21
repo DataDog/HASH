@@ -41,8 +41,7 @@ class Template{
                 }
                 templates.push(doc)
             } catch (e) {
-                this.logger.error('Template -> loading template: '+template +' Failed ')
-                this.logger.error('Template -> ' +  e)
+                throw new Error("Failed loading template: " + template + ": " + e)
             }
         }
 
