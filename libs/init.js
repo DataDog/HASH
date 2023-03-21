@@ -2,7 +2,6 @@ const express = require('express')
 const mustacheExpress = require('mustache-express');  
 const crypto = require('crypto');
 
-
 const { faker } = require('./randomizer')
 
 module.exports = (app) => {
@@ -31,7 +30,7 @@ module.exports = (app) => {
         //configure session
         exp.set('trust proxy', 1) // trust first proxy
         exp.use(session({
-            secret: randomAppKey,
+            secret: process.env.APP_KEY || crypto.randomUUID(),
             resave: false,
             saveUninitialized: true,
             name: faker.internet.domainWord(),
