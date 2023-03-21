@@ -27,11 +27,17 @@ HASH is built using Node.js but it can mimic any web based language / server bas
 
 ```
 Debug=false
-APP_NAME=default
-SERVICE_NAME=<Service name> 
-LOG_TRANSPORTS=console,file,datadog #logs transports, only one is required and others are optional
-LOG_FILE=hash.log #required if you are using 'file' as log transport 
-DD_API_KEY=<Datadog API KEY> #required only if you are sending logs to datadog
+HONEYPOT_PROFILE=default
+
+# Available log transports, at least one is required
+LOG_TRANSPORTS=console,file,datadog
+
+# Required if using 'file' as log transport
+LOG_FILE=hash.log
+
+# Required only when using Datadog to send logs and APM traces
+DD_API_KEY=<Datadog API key>
+DD_SERVICE_NAME=<Service name to use in Datadog> 
 ```
 
 2. Install dependencies
@@ -40,11 +46,11 @@ DD_API_KEY=<Datadog API KEY> #required only if you are sending logs to datadog
 npm install
 ```
 
-3. Update the default templates at `apps/default`
+3. Update the default templates at `profiles/default`
 
-    a. Update `apps/default/init.yaml`
+    a. Update `profiles/default/init.yaml`
 
-    b. Add/update the request templates here `apps/default/templates`
+    b. Add/update the request templates here `profiles/default/templates`
 
 > You can also create a new application templates (documentation link)
 
@@ -59,7 +65,7 @@ node app.js
 
 ## Customization and configuration
 
-You can customize the default application in `apps/default` or create a new application `apps/<your-app>`
+You can customize the default application in `profiles/default` or create a new application `profiles/<your-app>`
 
 Example request template:
 

@@ -16,7 +16,7 @@ logger.info('App -> Starting HASH ');
  
 let appName = 'default'; //default app
 //overwrite by environment variable or the cli 
-appName = process.env.APP_NAME ||  process.argv.slice(2)[0];
+appName = process.env.HONEYPOT_PROFILE ||  process.argv.slice(2)[0];
 
 
 logger.info('App -> Loading Application: ' + appName)

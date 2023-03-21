@@ -1,6 +1,6 @@
 const fs = require('fs')
 module.exports = (basedir, name) => {
-    const appDir = basedir + '/apps/' + name;
+    const appDir = basedir + '/profiles/' + name;
     const initFile = appDir + '/init.yaml';
     const templatesDir = appDir + '/templates';
     const resourcesDir = templatesDir + '/resources';

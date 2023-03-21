@@ -16,14 +16,16 @@ const availableTransports = {
         });
     },
     "datadog" : () => {
+        const datadogServiceName = process.env.DD_SERVICE_NAME || process.env.HONEYPOT_PROFILE || 'default';
+
         require('dd-trace').init({
             appsec: true,
             logInjection: true,
-            service: process.env.SERVICE_NAME
+            service: datadogServiceName,
         }); 
         return new winston.transports.Http({
             host: 'http-intake.logs.datadoghq.com',
-            path: '/api/v2/logs?dd-api-key='+process.env.DD_API_KEY+'&ddsource=nodejs&service='+process.env.SERVICE_NAME,
+            path: '/api/v2/logs?dd-api-key='+process.env.DD_API_KEY+'&ddsource=nodejs&service='+encodeURIComponent(datadogServiceName),
             ssl: true
         })
     },
