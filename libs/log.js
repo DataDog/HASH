@@ -17,6 +17,11 @@ const availableTransports = {
     },
     "datadog" : () => {
         const datadogServiceName = process.env.DD_SERVICE_NAME || process.env.HONEYPOT_PROFILE || 'default';
+        const datadogApiKey = process.env.DD_API_KEY;
+
+        if (!datadogApiKey) {
+            throw new Error("Missing Datadog API key - specify DD_API_KEY or disable the 'datadog' log transport.")
+        }
 
         require('dd-trace').init({
             appsec: true,
@@ -46,8 +51,7 @@ for (const transport of transports) {
         logger.add(availableTransports[transport]());
         logger.info('Log -> Enable log transport: ' + transport);
     }else{
-        logger.error('Log -> log transport "' + transport + '" not found.');
-        process.exit(1);
+        throw new Error('Log -> log transport "' + transport + '" not found.');
     }
 }
 
