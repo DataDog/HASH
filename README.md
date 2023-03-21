@@ -26,7 +26,6 @@ HASH is built using Node.js but it can mimic any web based language / server bas
 
 ```
 Debug=false
-APP_KEY=<app key> #randomize key used internally
 APP_NAME=default
 SERVICE_NAME=<Service name> 
 LOG_TRANSPORTS=console,files,datadog #logs transports, only one is required and others are optional
