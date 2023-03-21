@@ -15,7 +15,7 @@ apps
 │       |__ request2.yaml
 ```
 
-> You can define which application HASH should run in the environment variable `APP_NAME`
+> You can define which application HASH should run in the environment variable `HONEYPOT_PROFILE`
 
 The main configurations live inside `init.yaml` and `templates/` folder
 

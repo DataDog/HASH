@@ -1,6 +1,6 @@
 # HASH (HTTP Agnostic Software Honeypot)
-Hash is a framework for creating and launching low interactive honeypots. 
 
+HASH is a framework for creating and launching low interactive honeypots. 
 
 ![HASH](./docs/hash-intro.png "HASH")
 
@@ -13,12 +13,12 @@ The main philosophy of HASH is to be easy to configure and flexible to mimic any
 * Single framework to deploy HTTP/HTTPs based honeypots
 * Easily configurable via YAML files
 * Built-in honeytraps
-* Out-of-the box integration with Datadog to review the honeypot logs
 * Powerful randomization based on `fakerjs` to avoid honeypot detection
+* Optionally, integration with Datadog to ingest and analyze honeypots logs and HTTP requests through APM
 
 
 # 🚀 Getting Started
-HASH is built using Node.js but it can mimic any web based language / server based on the configuration. Read the full docs here:
+HASH is built using Node.js but it can mimic any web based language / server based on the configuration. Read the full docs below.
 
 
 ## Installation
@@ -26,12 +26,17 @@ HASH is built using Node.js but it can mimic any web based language / server bas
 1. Copy `.env.example` to `.env` and add your secrets
 
 ```
-Debug=false
-APP_NAME=default
-SERVICE_NAME=<Service name> 
-LOG_TRANSPORTS=console,files,datadog #logs transports, only one is required and others are optional
-LOG_FILE=hash.log #required if you are using files as log transport 
-DD_API_KEY=<Datadog API KEY> #required only if you are sending logs to datadog
+HONEYPOT_PROFILE=default
+
+# Available log transports, at least one is required
+LOG_TRANSPORTS=console,file,datadog
+
+# Required if using 'file' as log transport
+LOG_FILE=hash.log
+
+# Required only when using Datadog to send logs and APM traces
+DD_API_KEY=<Datadog API key>
+DD_SERVICE_NAME=<Service name to use in Datadog> 
 ```
 
 2. Install dependencies
@@ -40,11 +45,11 @@ DD_API_KEY=<Datadog API KEY> #required only if you are sending logs to datadog
 npm install
 ```
 
-3. Update the default templates at `apps/default`
+3. Update the default templates at `profiles/default`
 
-    a. Update `apps/default/init.yaml`
+    a. Update `profiles/default/init.yaml`
 
-    b. Add/update the request templates here `apps/default/templates`
+    b. Add/update the request templates here `profiles/default/templates`
 
 > You can also create a new application templates (documentation link)
 
@@ -54,12 +59,13 @@ npm install
 ```
 node app.js
 ```
-> For production grade deployment explore running with PM2 or advanced deployment with Docker & Kubernetes
+
+> For production grade deployment, explore running it with PM2 or on Kubernetes.
 
 
 ## Customization and configuration
 
-You can customize the default application in `apps/default` or create a new application `apps/<your-app>`
+You can customize the default honeypot profile in `profiles/default` or create a new profile `profiles/<your-profile>`
 
 Example request template:
 
@@ -99,3 +105,11 @@ Read the config documentation [here](./docs/config.md)
 - [ ] Add unit & integration tests 
 - [ ] Ability to import API documentation formats (swagger, postman ..etc)
 - [ ] Package hash as module for easier distribution
+
+## License and Contribution
+
+Released under the Apache-2.0 license, contributions are welcome!
+
+## Contacts
+
+Feel free to open an issue, or reach out at securitylabs@datadoghq.com.

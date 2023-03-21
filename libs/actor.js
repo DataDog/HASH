@@ -1,4 +1,3 @@
-// const mark 
+// const mark
 
-
-module.exports = {}
+module.exports = {};
