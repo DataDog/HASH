@@ -195,6 +195,7 @@
 "path-parse@1.0.7","MIT","https://github.com/jbgutierrez/path-parse"
 "path-to-regexp@0.1.7","MIT","https://github.com/component/path-to-regexp"
 "pify@5.0.0","MIT","https://github.com/sindresorhus/pify"
+"prettier@2.8.6","MIT","https://github.com/prettier/prettier"
 "protobufjs@7.1.2","BSD-3-Clause","https://github.com/protobufjs/protobuf.js"
 "proxy-addr@2.0.7","MIT","https://github.com/jshttp/proxy-addr"
 "punycode@2.1.1","MIT","https://github.com/bestiejs/punycode.js"

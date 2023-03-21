@@ -1,0 +1,12 @@
+repos:
+    - repo: local
+      hooks:
+          - id: format
+            name: Format JS code
+            language: system
+            entry: npm run prettier-check
+
+          - id: dependencies
+            name: Generate third-party license files
+            language: system
+            entry: npm run generate-third-party-licenses
