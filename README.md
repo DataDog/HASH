@@ -20,6 +20,8 @@ The main philosophy of HASH is to be easy to configure and flexible to mimic any
 # 🚀 Getting Started
 HASH is built using Node.js but it can mimic any web based language / server based on the configuration. Read the full docs here:
 
+
+
 ## Installation
 
 1. Copy `.env.example` to `.env` and add your secrets
@@ -90,6 +92,14 @@ requests:
 ```
 
 Read the config documentation [here](./docs/config.md)
+
+
+
+## Future work
+- [ ] Add unit & integration tests 
+- [ ] Ability to import API documentation formats (swagger, postman ..etc)
+- [ ] Package hash as module for easier distribution
+- [ ]
 
 
 ## License and Contribution
