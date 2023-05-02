@@ -1,0 +1,24 @@
+id: api_posts
+info:
+    title: "API Posts"
+requests:
+  - isTrap: true
+    expect:
+      method: GET
+      path: '/api/article/:userId(\d+)'
+    reply:
+      status: 500
+      headers:
+        content-type: "text/html"
+      body: 
+        contents: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2"
+  - isTrap: true
+    expect:
+      method: GET
+      path: '/api/articles'
+    reply:
+      status: 200
+      headers:
+        content-type: "application/json"
+      body: 
+        view: "articles.json"

@@ -1,0 +1,14 @@
+id: not_found
+info:
+    title: "404 not found"
+requests:
+  - expect:
+      method: GET
+      path: '*'
+    reply:
+      status: 404
+      headers:
+        content-type: "text/html"
+      body: 
+        cache: false
+        view: "404.html"

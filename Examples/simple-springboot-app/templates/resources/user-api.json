@@ -1,0 +1,10 @@
+{ 
+  "id": {{ params.userId }}, 
+  "username": "$<faker.lorem.slug()>",
+  "avatar_url": "$<faker.internet.avatar()>",
+  "role": "User",
+  "name": "$<faker.name.fullName()>",
+  "location": "$<faker.address.country()>",
+  "email": "$<faker.internet.email()>",
+  "bio": "$<faker.lorem.paragraphs(3)>"
+} 
