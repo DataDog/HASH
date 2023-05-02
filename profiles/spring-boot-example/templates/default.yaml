@@ -1,0 +1,22 @@
+id: default
+info:
+    title: "Default index template"
+requests:
+  - expect:
+      method: GET
+      path: '/'
+    reply:
+      status: 200
+      headers:
+        content-type: "application/json"
+      body: 
+        contents: '{"hello":"world", "links": ["/api/login", "/api/articles", "/api/article/{id}","/api/authors", "/api/author/{id}"]}'
+  - expect:
+      method: GET
+      path: '/favicon.ico'
+    reply:
+      status: 200
+      headers:
+        content-type: "image/x-icon"
+      body:
+        static: "favicon.ico"

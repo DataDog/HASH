@@ -1,0 +1,24 @@
+id: api_auth
+info:
+    title: "API Auth"
+requests:
+  - isTrap: true
+    expect:
+      method: GET
+      path: '/api/login'
+    reply:
+      status: 200
+      headers:
+        content-type: "application/json"
+      body: 
+        contents: '{"status":"error", "message":"Please use POST request to login"}'
+  - isTrap: true
+    expect:
+      method: POST
+      path: '/api/login'
+    reply:
+      status: 200
+      headers:
+        content-type: "application/json"
+      body: 
+        contents: '{"status":"error", "message":"Invalid credentials"}'

@@ -1,0 +1,47 @@
+id: actuators
+info:
+    title: "Springboot Actuators"
+requests:
+  - isTrap: true
+    expect:
+      method: GET
+      path: '/actuator/health'
+    reply:
+      status: 200
+      headers:
+        content-type: "application/vnd.spring-boot.actuator.v3+json"
+      body: 
+        contents: '{"status":"UP"}'
+
+  - isTrap: true
+    expect:
+      method: GET
+      path: '/actuator/beans'
+    reply:
+      status: 200
+      headers:
+        content-type: "application/json"
+      body: 
+        view: "actuators_beans.json"
+
+  - isTrap: true
+    expect:
+      method: GET
+      path: '/actuator/configprops'
+    reply:
+      status: 200
+      headers:
+        content-type: "application/vnd.spring-boot.actuator.v3+json"
+      body: 
+        view: "actuators_configprops.json"
+
+  - isTrap: true
+    expect:
+      method: GET
+      path: '/actuator/env'
+    reply:
+      status: 200
+      headers:
+        content-type: "application/vnd.spring-boot.actuator.v3+json"
+      body: 
+        view: "actuators_env.json"
