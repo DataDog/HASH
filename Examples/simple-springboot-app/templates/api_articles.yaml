@@ -5,7 +5,7 @@ requests:
   - isTrap: true
     expect:
       method: GET
-      path: '/api/article/:userId(\d+)'
+      path: '/api/article/:articleId(\d+)'
     reply:
       status: 500
       headers:
