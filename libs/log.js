@@ -4,9 +4,6 @@ const path = require('path')
 
 module.exports.newLogger = (config) => {
 
-    console.log('config ==>' , config)
-
-
     const availableTransports = {
         console: () => {
             return new winston.transports.Console({

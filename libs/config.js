@@ -2,6 +2,7 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 
 const defaultConfig = {
+    name: "hash-default-name",
     port: 3000,
     headers: {},
 };

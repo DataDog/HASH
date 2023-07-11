@@ -8,13 +8,10 @@ const run = (appFolder, options) => {
     //validate the folder first
     const app = newApp(appFolder);
 
-
     console.log('-----------------------------------');
     console.log(figlet.textSync('HASH', { horizontalLayout: 'full' }));
     console.log(' HTTP Agnostic Software Honeypot ');
     console.log('-----------------------------------');
-
-    
 
     const config = require('./libs/config')(app);
     app.config = config;
@@ -57,10 +54,9 @@ const run = (appFolder, options) => {
     });
 
     http.listen(config.port, () => {
-        app.logger.info(`App -> ${app.name} listening on port ${config.port}`);
+        app.logger.info(`App -> ${app.config.name} listening on port ${config.port}`);
     });
 
-    //console.log(appFolder);
 }
 
 module.exports = run

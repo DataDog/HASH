@@ -2,7 +2,6 @@ const fs = require('fs');
 
 
 module.exports.newApp = (appDir) => {
-   // const appDir = basedir + '/profiles/' + name;
     const initFile = appDir + '/init.yaml';
     const templatesDir = appDir + '/templates';
     const resourcesDir = templatesDir + '/resources';
@@ -27,10 +26,7 @@ module.exports.newApp = (appDir) => {
         process.exit(1);
     }
 
-
     //retrive the configurations
-
-
     return {
         initFile,
         templatesDir,
