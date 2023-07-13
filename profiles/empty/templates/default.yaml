@@ -1,0 +1,13 @@
+id: default
+info:
+    title: "Default"
+requests:
+  - expect:
+      method: GET
+      path: '/'
+    reply:
+      status: 200
+      headers:
+        content-type: "text/html"
+      body: 
+        contents: "{%DefaultHome%}"

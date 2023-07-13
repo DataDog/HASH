@@ -1,13 +1,7 @@
 'use strict';
 
-const run = require('./run')
-
-// const figlet = require('figlet');
-// const chalk = require('chalk');
-// console.log('-----------------------------------');
-// console.log(figlet.textSync('HASH', { horizontalLayout: 'full' }));
-// console.log(' HTTP Agnostic Software Honeypot ');
-// console.log('-----------------------------------');
+const run = require('./cli/run')
+const generate = require('./cli/generate')
 
 //setup the cli
 //hash ./laravel
@@ -25,6 +19,16 @@ program.command('run')
     .option('-f, --log_file <filename>', 'logging filename', 'hash.log')
     .action((appFolder, options) => {
         run(appFolder, options)
+    });
+
+program.command('generate')
+    .description('generate default template')
+    .argument('<folder>', 'path/to the app')
+    .option('-t --template <template_name>', 'base template', 'default')
+    .option('-n --name <honeypot_name>', 'Honeypot name')
+    .option('-s --swagger <swagger_file>', 'Path to swagger file to convert')
+    .action(async (appFolder, options) => {
+        await generate(appFolder, options)
     });
 
 program.parse();
