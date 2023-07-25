@@ -35,11 +35,12 @@ const availableTransports = {
         });
         return new winston.transports.Http({
             host: 'http-intake.logs.datadoghq.com',
-            path:
+            path: encodeURIComponent(
                 '/api/v2/logs?dd-api-key=' +
-                process.env.DD_API_KEY +
-                '&ddsource=nodejs&service=' +
-                encodeURIComponent(datadogServiceName),
+                    process.env.DD_API_KEY +
+                    '&ddsource=nodejs&service=' +
+                    datadogServiceName
+            ),
             ssl: true,
         });
     },
