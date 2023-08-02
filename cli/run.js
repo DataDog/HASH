@@ -43,7 +43,7 @@ const run = (appFolder, options) => {
 
     //overwrite express error handler
     http.use((err, req, res, next) => {
-        logger.error('HTTP -> 500 error: ' + err.message, { stack: err.stack });
+        app.logger.error('HTTP -> 500 error: ' + err.message, { stack: err.stack });
         res.status(200).send('!!');
     });
 
@@ -53,7 +53,7 @@ const run = (appFolder, options) => {
     });
 
     http.listen(config.port, () => {
-        app.logger.info(`App -> ${app.config.name} listening on port ${config.port}`);
+        app.logger.info(`App -> listening on port ${config.port}`);
     });
 
 }

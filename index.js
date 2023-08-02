@@ -22,7 +22,7 @@ program.command('run')
     });
 
 program.command('generate')
-    .description('generate default template')
+    .description('Generate honeypot profile')
     .argument('<folder>', 'path/to the app')
     .option('-t --template <template_name>', 'base template', 'default')
     .option('-n --name <honeypot_name>', 'Honeypot name')

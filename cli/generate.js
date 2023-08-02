@@ -44,8 +44,6 @@ const generate = async(appFolder, options) => {
         process.exit(1);
     }
 
-    console.log('soso')
-    console.log(appFolder, options)
 }
 
 
@@ -53,7 +51,7 @@ const replaceTemplateContents = (appFolder, options) => {
     let initContents = fs.readFileSync(appFolder + "/init.yaml", { encoding:"utf8"})
 
     initContents = initContents.replace("{%HoneypotName%}", options.name || "default-name");
-    initContents = initContents.replace("{%DefaultHome%}", ""); //replace with empty string for now, TODO: add customization
+    initContents = initContents.replace("{%DefaultHome%}", " "); //replace with empty string for now, TODO: add customization
 
     fs.writeFileSync(appFolder + "/init.yaml", initContents);
 }
@@ -215,7 +213,7 @@ const autoDiscoverRandomization = (keyName, type, pathToRoute) => {
         return "$<faker.address.streetAddress()>"
     }
 
-    if(['city'].includes(keyName)){
+    if(['city', 'state'].includes(keyName)){
         //its a name
         return "$<faker.address.city()>"
     }
