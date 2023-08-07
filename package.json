@@ -2,7 +2,7 @@
     "name": "hash-honeypot",
     "version": "1.0.0",
     "description": "HTTP Agnostic Software Honeypot (HASH) - honeypot framework to build low interaction honeypots",
-    "main": "app.js",
+    "main": "index.js",
     "bin": {
         "hash-cli": "bin/hash-cli"
     },
