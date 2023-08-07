@@ -1,6 +1,8 @@
 const winston = require('winston');
-const fs = require('fs')
 const path = require('path')
+
+const MAX_FILE_SIZE = 1000000;
+const MAX_FILES = 100;
 
 module.exports.newLogger = (config) => {
 
@@ -18,7 +20,10 @@ module.exports.newLogger = (config) => {
                 config.options.log_file = path.resolve(process.cwd(), 'hash.log')
             }
             return new winston.transports.File({
+                tailable:true,
                 filename: config.options.log_file,
+                maxsize: MAX_FILE_SIZE,
+                maxFiles: MAX_FILES
             });
 
         },
