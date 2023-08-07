@@ -19,7 +19,6 @@ services:
       context: . 
       dockerfile: Dockerfile
     environment:
-      - HONEYPOT_PROFILE=${HONEYPOT_PROFILE:-default}
       - DD_AGENT_HOST=agent
       - DD_TRACE_AGENT_PORT=8126
       - DD_TRACER_ENABLED=true
@@ -41,7 +40,6 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     environment:
-      - HONEYPOT_PROFILE=${HONEYPOT_PROFILE:-default}
       - DD_AGENT_HOST=agent
       - DD_TRACE_AGENT_PORT=8126
       - DD_TRACER_ENABLED=true

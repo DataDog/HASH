@@ -1,7 +1,7 @@
 {
-    "name": "honeypot",
+    "name": "hash-honeypot",
     "version": "1.0.0",
-    "description": "",
+    "description": "HTTP Agnostic Software Honeypot (HASH) - honeypot framework to build low interaction honeypots",
     "main": "app.js",
     "bin": {
         "hash-cli": "bin/hash-cli"
@@ -12,8 +12,8 @@
         "prettier-check": "./node_modules/prettier/bin-prettier.js --check --ignore-unknown",
         "generate-third-party-licenses": "./node_modules/license-checker/bin/license-checker --csv --customPath .license-checker.json > LICENSE-3rdparty.csv"
     },
-    "author": "",
-    "license": "",
+    "author": "Datadog Security Research team",
+    "license": "Apache-2",
     "dependencies": {
         "@faker-js/faker": "^7.6.0",
         "chalk": "^4.1.2",

@@ -15,4 +15,6 @@ RUN npm i
 # Bundle app source
 COPY . .
 
-CMD [ "node", "app.js" ]
+RUN chmod +x ./bin/hash-cli
+
+ENTRYPOINT [ "./bin/hash-cli" ]

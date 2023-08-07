@@ -1,21 +1,17 @@
 # HASH Config
-You can have multiple applications with different configurations. Each application have its own folder using this structure
+Typical honeypot profile follow the this structure
 
 ```
-apps
-├── default
-│   ├── init.yaml
-│   └── templates
-│       |__ request1.yaml
-│       |__ request2.yaml
-├── application-2
-│   ├── init.yaml
-│   └── templates
-│       |__ request1.yaml
-│       |__ request2.yaml
+|____templates
+|     |____resources
+|     |     |____index.html
+|     |     |____style.css
+|     |     |____favicon.ico
+|     |____404.yaml
+|     |____default.yaml
+|____init.yaml
 ```
 
-> You can define which application HASH should run in the environment variable `HONEYPOT_PROFILE`
 
 The main configurations live inside `init.yaml` and `templates/` folder
 
