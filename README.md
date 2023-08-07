@@ -30,7 +30,7 @@ HASH is built using Node.js but it can mimic any web based language / server bas
 ### You can Install it via NPM 
 
 ```
-npm install -g hash-cli
+npm install -g hash-honeypot
 ```
 
 
@@ -77,7 +77,7 @@ Options:
 **Example**
 
 ```
-hash-cli generate myhoneypot -n my-honey-pot -t default
+hash-honeypot generate myhoneypot -n my-honey-pot -t default
 ```
 
 
@@ -86,7 +86,7 @@ You can also convert swagger files to honeypot directly from the `generate` comm
 **Example converting swagger file(s) to honeypot**
 
 ```
-hash-cli generate sample-swagger2 -n sample -s ./test-swagger/test-swagger.yaml
+hash-honeypot generate sample-swagger2 -n sample -s ./test-swagger/test-swagger.yaml
 ```
 
 
@@ -110,7 +110,7 @@ Options:
 **example**
 
 ```
-hash-cli my-honeypot-profile -l file -f ./logs/hash.log
+hash-honeypot my-honeypot-profile -l file -f ./logs/hash.log
 ```
 
 > If you are using Datadog for logs make sure you export the datadog api key `export DD_API_KEY=<your-api-key>`

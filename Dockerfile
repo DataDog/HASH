@@ -15,6 +15,6 @@ RUN npm i
 # Bundle app source
 COPY . .
 
-RUN chmod +x ./bin/hash-cli
+RUN chmod +x ./bin/hash-honeypot
 
-ENTRYPOINT [ "./bin/hash-cli" ]
+ENTRYPOINT [ "./bin/hash-honeypot" ]

@@ -4,7 +4,7 @@
     "description": "HTTP Agnostic Software Honeypot (HASH) - honeypot framework to build low interaction honeypots",
     "main": "index.js",
     "bin": {
-        "hash-cli": "bin/hash-cli"
+        "hash-cli": "bin/hash-honeypot"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
