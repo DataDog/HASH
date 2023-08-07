@@ -23,8 +23,7 @@ The main philosophy of HASH is to be easy to configure and flexible to mimic any
 
 
 # 🚀 Getting Started
-HASH is built using Node.js but it can mimic any web based language / server based on the configuration. Read the full docs below.
-
+HASH is built using Node.js but it can mimic any web-based language / server based on the configuration. Read the full docs below.
 
 
 ## Installation
@@ -80,7 +79,7 @@ Options:
 **Example**
 
 ```
-hash-honeypot generate myhoneypot -n my-honey-pot -t default
+hash-honeypot generate myhoneypot --name my-honey-pot --template default
 ```
 
 
@@ -155,7 +154,7 @@ requests:
         contents: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2"
 ```
 
-Read the config documentation [here](./docs/config.md) or see the examples [here](./Examples) 
+Read the configuration reference [here](./docs/config.md) or see the examples [here](./Examples). 
 
 
 ## Future work
@@ -171,6 +170,6 @@ Read the config documentation [here](./docs/config.md) or see the examples [here
 
 Released under the Apache-2.0 license, contributions are welcome!
 
-## Contacts
+## Contact
 
 Feel free to open an issue, or reach out at securitylabs@datadoghq.com.
