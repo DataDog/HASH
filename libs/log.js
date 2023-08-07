@@ -4,6 +4,7 @@ const path = require('path')
 const MAX_FILE_SIZE = 1000000;
 const MAX_FILES = 100;
 
+
 module.exports.newLogger = (config) => {
 
     const availableTransports = {
@@ -46,11 +47,12 @@ module.exports.newLogger = (config) => {
             });
             return new winston.transports.Http({
                 host: 'http-intake.logs.datadoghq.com',
-                path:
+                path: encodeURIComponent(
                     '/api/v2/logs?dd-api-key=' +
                     process.env.DD_API_KEY +
                     '&ddsource=nodejs&service=' +
-                    encodeURIComponent(datadogServiceName),
+                    datadogServiceName
+                ),
                 ssl: true,
             });
         },
