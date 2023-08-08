@@ -1,4 +1,4 @@
-honeypot-name: "{%HoneypotName%}"
+honeypot-name: '{%HoneypotName%}'
 port: 3000
 headers:
-  "Server": "nginx"
+    'Server': 'nginx'

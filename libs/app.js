@@ -1,6 +1,5 @@
 const fs = require('fs');
 
-
 module.exports.newApp = (appDir) => {
     const initFile = appDir + '/init.yaml';
     const templatesDir = appDir + '/templates';

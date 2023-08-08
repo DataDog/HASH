@@ -1,34 +1,34 @@
-version: "3.9"
+version: '3.9'
 services:
-  agent:
-    image: datadog/agent:latest
-    ports:
-      - "8126:8126"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /proc/:/host/proc/:ro
-      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
-    environment:
-      - DD_APM_ENABLED=true
-      - DD_APM_NON_LOCAL_TRAFFIC=true
-      - DD_API_KEY=${DD_API_KEY}
-      - DD_SITE=${DD_SITE:-datadoghq.com}
-      - DD_ENV=prod  
-  default:
-    build:
-      context: . 
-      dockerfile: Dockerfile
-    environment:
-      - DD_AGENT_HOST=agent
-      - DD_TRACE_AGENT_PORT=8126
-      - DD_TRACER_ENABLED=true
-      - DD_APPSEC_ENABLED=true
-      - DD_SERVICE=${DD_SERVICE:-sec-research}
-      - DD_TRACE_DEBUG=false
-      - DD_ENV=prod  
-    tty: true
-    depends_on:
-      agent:
-        condition: service_healthy
-    ports:
-       - 8081:3000
+    agent:
+        image: datadog/agent:latest
+        ports:
+            - '8126:8126'
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - /proc/:/host/proc/:ro
+            - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+        environment:
+            - DD_APM_ENABLED=true
+            - DD_APM_NON_LOCAL_TRAFFIC=true
+            - DD_API_KEY=${DD_API_KEY}
+            - DD_SITE=${DD_SITE:-datadoghq.com}
+            - DD_ENV=prod
+    default:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        environment:
+            - DD_AGENT_HOST=agent
+            - DD_TRACE_AGENT_PORT=8126
+            - DD_TRACER_ENABLED=true
+            - DD_APPSEC_ENABLED=true
+            - DD_SERVICE=${DD_SERVICE:-sec-research}
+            - DD_TRACE_DEBUG=false
+            - DD_ENV=prod
+        tty: true
+        depends_on:
+            agent:
+                condition: service_healthy
+        ports:
+            - 8081:3000

@@ -134,7 +134,6 @@ class Simulator {
                 );
             }
 
-
             res.set(reply.headers);
 
             if (reply.body.static) {

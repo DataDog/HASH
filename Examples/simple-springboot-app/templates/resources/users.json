@@ -1,12 +1,14 @@
-[{
-    "id":"$<faker.datatype.number()>",
-    "link":"/api/author/$<faker.datatype.number()>" 
-},
-{
-    "id":"$<faker.datatype.number()>",
-    "link":"/api/author/$<faker.datatype.number()>"
-},
-{
-    "id":"$<faker.datatype.number()>",
-    "link":"/api/author/$<faker.datatype.number()>"
-}]
+[
+    {
+        "id": "$<faker.datatype.number()>",
+        "link": "/api/author/$<faker.datatype.number()>"
+    },
+    {
+        "id": "$<faker.datatype.number()>",
+        "link": "/api/author/$<faker.datatype.number()>"
+    },
+    {
+        "id": "$<faker.datatype.number()>",
+        "link": "/api/author/$<faker.datatype.number()>"
+    }
+]

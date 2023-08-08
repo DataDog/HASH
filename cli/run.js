@@ -3,7 +3,6 @@ const { newApp } = require('../libs/app');
 const { newLogger } = require('../libs/log');
 
 const run = (appFolder, options) => {
-
     //validate the folder first
     const app = newApp(appFolder);
 
@@ -43,7 +42,9 @@ const run = (appFolder, options) => {
 
     //overwrite express error handler
     http.use((err, req, res, next) => {
-        app.logger.error('HTTP -> 500 error: ' + err.message, { stack: err.stack });
+        app.logger.error('HTTP -> 500 error: ' + err.message, {
+            stack: err.stack,
+        });
         res.status(200).send('!!');
     });
 
@@ -55,7 +56,6 @@ const run = (appFolder, options) => {
     http.listen(config.port, () => {
         app.logger.info(`App -> listening on port ${config.port}`);
     });
+};
 
-}
-
-module.exports = run
+module.exports = run;

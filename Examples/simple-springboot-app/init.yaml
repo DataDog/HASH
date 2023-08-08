@@ -1,3 +1,3 @@
-name: "spring-boot"
+name: 'spring-boot'
 port: 3000
 headers:

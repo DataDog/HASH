@@ -1,24 +1,24 @@
 id: api_users
 info:
-    title: "API User"
+    title: 'API User'
 requests:
-  - isTrap: true
-    expect:
-      method: GET
-      path: '/api/authors'
-    reply:
-      status: 200
-      headers:
-        content-type: "application/json"
-      body: 
-        view: "users.json"
-  - isTrap: true
-    expect:
-      method: GET
-      path: '/api/author/:userId(\d+)'
-    reply:
-      status: 200
-      headers:
-        content-type: "application/json"
-      body: 
-        view: "user-api.json"
+    - isTrap: true
+      expect:
+          method: GET
+          path: '/api/authors'
+      reply:
+          status: 200
+          headers:
+              content-type: 'application/json'
+          body:
+              view: 'users.json'
+    - isTrap: true
+      expect:
+          method: GET
+          path: '/api/author/:userId(\d+)'
+      reply:
+          status: 200
+          headers:
+              content-type: 'application/json'
+          body:
+              view: 'user-api.json'
