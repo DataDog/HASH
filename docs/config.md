@@ -1,6 +1,6 @@
 # HASH Config
 
-Typical honeypot profile follow the this structure
+A typical honeypot profile follows the file structure below:
 
 ```
 |____templates
