@@ -17,13 +17,8 @@ The main philosophy of HASH is to be easy to configure and flexible to mimic any
 -   Optionally, integration with Datadog to ingest and analyze honeypots logs and HTTP requests through APM
 
 # 🚀 Getting Started
-<<<<<<< HEAD
+
 HASH is built using Node.js but it can mimic any web-based language / server based on the configuration. Read the full docs below.
-
-=======
-
-HASH is built using Node.js but it can mimic any web based language / server based on the configuration. Read the full docs below.
->>>>>>> 5062f89 (lint)
 
 ## Installation
 
