@@ -1,114 +1,169 @@
 # HASH (HTTP Agnostic Software Honeypot)
 
-HASH is a framework for creating and launching low interactive honeypots. 
+HASH is a framework for creating and launching low interactive honeypots.
 
-![HASH](./docs/hash-intro.png "HASH")
+![HASH](https://raw.githubusercontent.com/DataDog/HASH/main/docs/hash-intro.png 'HASH')
 
 # 🌟 Why HASH?
-The main philosophy of HASH is to be easy to configure and flexible to mimic any software running on HTTP/HTTPs. With the minimum footprint possible to avoid being detected as honeypot.
 
+The main philosophy of HASH is to be easy to configure and flexible to mimic any software running on HTTP/HTTPs. With the minimum footprint possible to avoid being detected as honeypot.
 
 # ⚡ Features
 
-* Single framework to deploy HTTP/HTTPs based honeypots
-* Easily configurable via YAML files
-* Built-in honeytraps
-* Powerful randomization based on `fakerjs` to avoid honeypot detection
-* Optionally, integration with Datadog to ingest and analyze honeypots logs and HTTP requests through APM
-
+-   Single framework to deploy HTTP/HTTPs based honeypots
+-   Easily configurable via YAML files
+-   Built-in honeytraps
+-   Powerful randomization based on `fakerjs` to avoid honeypot detection
+-   Optionally, integration with Datadog to ingest and analyze honeypots logs and HTTP requests through APM
 
 # 🚀 Getting Started
-HASH is built using Node.js but it can mimic any web based language / server based on the configuration. Read the full docs below.
+<<<<<<< HEAD
+HASH is built using Node.js but it can mimic any web-based language / server based on the configuration. Read the full docs below.
 
+=======
+
+HASH is built using Node.js but it can mimic any web based language / server based on the configuration. Read the full docs below.
+>>>>>>> 5062f89 (lint)
 
 ## Installation
 
-1. Copy `.env.example` to `.env` and add your secrets
+### You can Install it via NPM
 
 ```
-HONEYPOT_PROFILE=default
-
-# Available log transports, at least one is required
-LOG_TRANSPORTS=console,file,datadog
-
-# Required if using 'file' as log transport
-LOG_FILE=hash.log
-
-# Required only when using Datadog to send logs and APM traces
-DD_API_KEY=<Datadog API key>
-DD_SERVICE_NAME=<Service name to use in Datadog> 
+npm install -g hash-honeypot
 ```
 
-2. Install dependencies
+### Or you can use it directly from docker
 
 ```
-npm install
+docker run --rm ghcr.io/datadog/hash help
 ```
 
-3. Update the default templates at `profiles/default`
+## Usage
 
-    a. Update `profiles/default/init.yaml`
+### Generate honeypot profile
 
-    b. Add/update the request templates here `profiles/default/templates`
-
-> You can also create a new application templates (documentation link)
-
-
-4. Run HASH
+HASH uses YAML files to configure how it simulate the desired software, The typical structure for the profile folder is the following
 
 ```
-node app.js
+|____templates
+|     |____resources
+|     |     |____index.html
+|     |     |____style.css
+|     |     |____favicon.ico
+|     |____404.yaml
+|     |____default.yaml
+|____init.yaml
 ```
 
-> For production grade deployment, explore running it with PM2 or on Kubernetes.
+You can build it yourself or you can generate it using `generate` command
 
+```
+Usage: HASH generate [options] <folder>
+
+Generate honeypot profile
+
+Arguments:
+  folder                         path/to the app
+
+Options:
+  -t --template <template_name>  base template (default: "default")
+  -n --name <honeypot_name>      Honeypot name
+  -s --swagger <swagger_file>    Path to swagger file to convert
+  -h, --help                     display help for command
+```
+
+**Example**
+
+```
+hash-honeypot generate myhoneypot --name my-honey-pot --template default
+```
+
+You can also convert swagger files to honeypot directly from the `generate` command
+
+**Example converting swagger file(s) to honeypot**
+
+```
+hash-honeypot generate sample-swagger2 -n sample -s ./test-swagger/test-swagger.yaml
+```
+
+### Running the honeypot
+
+```
+Usage: HASH run [options] <folder>
+
+Run HASH
+
+Arguments:
+  folder                     path/to the template folder
+
+Options:
+  -l, --log <transport>      logging transport (default: "console,file,datadog")
+  -f, --log_file <filename>  logging filename (default: "hash.log")
+  -h, --help                 display help for command
+```
+
+**example**
+
+```
+hash-honeypot my-honeypot-profile -l file -f ./logs/hash.log
+```
+
+> If you are using Datadog for logs make sure you export the datadog api key `export DD_API_KEY=<your-api-key>`
 
 ## Customization and configuration
 
-You can customize the default honeypot profile in `profiles/default` or create a new profile `profiles/<your-profile>`
+You can customize the your honeypot profile as you want
 
-Example request template:
+**Example request template:**
 
 ```yaml
 id: sqli-error
 info:
-    title: "SQL error honeytrap"
+    title: 'SQL error honeytrap'
 requests:
-  - isTrap: false 
-    expect:
-      method: GET
-      path: '/author/:Id([0-9]+)'
-    reply:
-      status: 200
-      headers:
-        content-type: "text/html"
-      body: 
-        view: "author.html"
-  - isTrap: true 
-    expect:
-      method: GET
-      path: '/author/:Id'
-    reply:
-      status: 500
-      headers:
-        content-type: "text/html"
-      body: 
-        contents: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2"
+    - isTrap: false
+      expect:
+          method: GET
+          path: '/author/:Id([0-9]+)'
+      reply:
+          status: 200
+          headers:
+              content-type: 'text/html'
+          body:
+              view: 'author.html'
+    - isTrap: true
+      expect:
+          method: GET
+          path: '/author/:Id'
+      reply:
+          status: 500
+          headers:
+              content-type: 'text/html'
+          body:
+              contents: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2"
 ```
 
-Read the config documentation [here](./docs/config.md) or see the examples [here](./Examples) 
+<<<<<<< HEAD
+Read the configuration reference [here](./docs/config.md) or see the examples [here](./Examples). 
 
+=======
+Read the config documentation [here](./docs/config.md) or see the examples [here](./Examples)
+>>>>>>> 5062f89 (lint)
 
 ## Future work
-- [ ] Create examples folder to show HASH features
-- [ ] Add unit & integration tests 
-- [ ] Ability to import API documentation formats (swagger, postman ..etc)
-- [ ] Package hash as module for easier distribution
+
+-   [x] Create examples folder to show HASH features
+-   [x] Ability to import API documentation formats (swagger ..etc)
+-   [x] Package hash as module for easier distribution
+-   [ ] Add capabilities for medium interactions
+-   [ ] Add popular honeytraps
+-   [ ] Add unit & integration tests
 
 ## License and Contribution
 
 Released under the Apache-2.0 license, contributions are welcome!
 
-## Contacts
+## Contact
 
 Feel free to open an issue, or reach out at securitylabs@datadoghq.com.

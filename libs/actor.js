@@ -1,3 +1,0 @@
-// const mark
-
-module.exports = {};

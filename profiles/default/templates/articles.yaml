@@ -1,21 +1,21 @@
 id: view-example
 info:
-    title: "View Example"
+    title: 'View Example'
 requests:
-  - expect:
-      method: GET
-      path: '/articles'
-    reply:
-      status: 200
-      headers:
-        content-type: "text/html"
-      body: 
-        view: "articles.html"
-        vars:
-          links:
-            - title: home
-              link: "/"
-            - title: about
-              link: "/about"
-            - title: contact
-              link: "/contact"
+    - expect:
+          method: GET
+          path: '/articles'
+      reply:
+          status: 200
+          headers:
+              content-type: 'text/html'
+          body:
+              view: 'articles.html'
+              vars:
+                  links:
+                      - title: home
+                        link: '/'
+                      - title: about
+                        link: '/about'
+                      - title: contact
+                        link: '/contact'

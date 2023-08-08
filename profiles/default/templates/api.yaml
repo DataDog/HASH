@@ -1,13 +1,13 @@
 id: api
 info:
-    title: "API"
+    title: 'API'
 requests:
-  - expect:
-      method: GET
-      path: '/user/:userId(\d+)'
-    reply:
-      status: 200
-      headers:
-        content-type: "application/json"
-      body: 
-        view: "user-api.json"
+    - expect:
+          method: GET
+          path: '/user/:userId(\d+)'
+      reply:
+          status: 200
+          headers:
+              content-type: 'application/json'
+          body:
+              view: 'user-api.json'

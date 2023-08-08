@@ -167,7 +167,7 @@ class Simulator {
                 enableCache
             );
 
-            res.status(reply.status).send(renderedContents);
+            res.status(parseInt(reply.status)).send(renderedContents);
         };
     }
 }

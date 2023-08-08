@@ -1,13 +1,13 @@
-id: not_found
+id: default
 info:
-    title: '404 not found'
+    title: 'Default'
 requests:
     - expect:
           method: GET
-          path: '*'
+          path: '/'
       reply:
-          status: 404
+          status: 200
           headers:
               content-type: 'text/html'
           body:
-              contents: '404 not found'
+              contents: '{%DefaultHome%}'
