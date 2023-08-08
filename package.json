@@ -12,7 +12,7 @@
         "prettier-check": "./node_modules/prettier/bin-prettier.js --check --ignore-unknown",
         "generate-third-party-licenses": "./node_modules/license-checker/bin/license-checker --csv --customPath .license-checker.json > LICENSE-3rdparty.csv"
     },
-    "author": "Datadog Security Research team",
+    "author": "Datadog",
     "license": "Apache-2",
     "dependencies": {
         "@faker-js/faker": "^7.6.0",
