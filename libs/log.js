@@ -32,7 +32,7 @@ module.exports.newLogger = (config) => {
             const datadogServiceName =
                 process.env.DD_SERVICE_NAME ||
                 config.name ||
-                'hash-deafult-service';
+                'hash-default-service';
             const datadogApiKey = process.env.DD_API_KEY;
 
             if (!datadogApiKey) {
