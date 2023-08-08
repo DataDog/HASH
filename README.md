@@ -139,12 +139,7 @@ requests:
               contents: "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2"
 ```
 
-<<<<<<< HEAD
 Read the configuration reference [here](./docs/config.md) or see the examples [here](./Examples). 
-
-=======
-Read the config documentation [here](./docs/config.md) or see the examples [here](./Examples)
->>>>>>> 5062f89 (lint)
 
 ## Future work
 
