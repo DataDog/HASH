@@ -10,7 +10,7 @@ const program = new Command();
 program
     .name('HASH')
     .description('HTTP Agnostic Software Honeypot')
-    .version('1.0.2');
+    .version('1.0.3');
 
 program
     .command('run')
