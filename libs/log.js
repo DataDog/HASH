@@ -47,14 +47,17 @@ module.exports.newLogger = (config) => {
                 logInjection: true,
                 service: datadogServiceName,
             });
+
+            const params = new URLSearchParams({
+                "dd-api-key": datadogApiKey,
+                "ddsource": "nodejs",
+                "service": datadogServiceName,
+            })
+            const path = `/api/v2/logs?${params.toString()}`
+
             return new winston.transports.Http({
                 host: 'http-intake.logs.datadoghq.com',
-                path: encodeURIComponent(
-                    '/api/v2/logs?dd-api-key=' +
-                        process.env.DD_API_KEY +
-                        '&ddsource=nodejs&service=' +
-                        datadogServiceName
-                ),
+                path,
                 ssl: true,
             });
         },
