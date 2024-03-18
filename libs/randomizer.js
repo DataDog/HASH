@@ -72,7 +72,7 @@ const render = (httpRequest, contents, vars, enableCache) => {
     let renderedContents;
 
     //check cache first
-    let cacheKey = Cache.key(httpRequest.path);
+    let cacheKey = Cache.key(httpRequest.path + httpRequest.method);
     let res = Cache.get(cacheKey);
     if (res) {
         return replaceUncachableVariables(res);
