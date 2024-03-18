@@ -10,8 +10,6 @@ module.exports = (app) => {
     const exp = express();
 
     //generate an app key
-    //const randomAppKey = crypto.createHash('md5').update(text).digest('hex')
-
     const randomAppKey = crypto.randomBytes(32).toString('hex');
 
     app.logger.info(
@@ -54,32 +52,46 @@ module.exports = (app) => {
 
     app.logger.info('Init -> Configure datadog logger');
     const middlewareLogger = function (req, res, next) {
+
         exp.logger = (id, title, info) => {
-            app.logger.warn(
-                'HASH: ' + req.method + ' ' + req.originalUrl + ': ' + title,
-                {
-                    type: 'malicious',
-                    templateId: id,
-                    info,
-                    http: {
-                        client_ip: req.ip,
-                        host: req.headers.host,
-                        method: req.method,
-                        path: req.path,
-                    },
-                    request: {
-                        query: req.query || {},
-                        params: req.params || {},
-                        body: req.body || {},
-                        headers: {
-                            ...req.headers,
-                            ...{
-                                cookie_parsed: req.cookies,
-                            },
+            const payload = {
+                type: 'malicious',
+                templateId: id,
+                info,
+                http: {
+                    client_ip: req.ip,
+                    host: req.headers.host,
+                    method: req.method,
+                    path: req.path,
+                },
+                request: {
+                    query: req.query || {},
+                    params: req.params || {},
+                    body: req.body || {},
+                    headers: {
+                        ...req.headers,
+                        ...{
+                            cookie_parsed: req.cookies,
                         },
                     },
-                }
+                },
+            }
+            app.logger.warn(
+                'HASH: ' + req.method + ' ' + req.originalUrl + ': ' + title,
+                payload
             );
+
+
+            // const span = app.tracer.scope().active()
+            // span.setTag("http.body", payload.request.body)
+            // span.setTag("http.info", payload.http)
+            // span.setTag("http.query", payload.query)
+
+            app.tracer.appsec.trackCustomEvent('malicious.trap', {
+                type: 'malicious',
+                templateId: id
+            })
+
         };
         next();
     };
