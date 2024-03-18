@@ -9,9 +9,6 @@ module.exports = (app) => {
 
     const exp = express();
 
-    //generate an app key
-    const randomAppKey = crypto.randomBytes(32).toString('hex');
-
     app.logger.info(
         'Init -> Configuring required middlewares (sessions, bodyparser)'
     );
@@ -80,12 +77,6 @@ module.exports = (app) => {
                 'HASH: ' + req.method + ' ' + req.originalUrl + ': ' + title,
                 payload
             );
-
-
-            // const span = app.tracer.scope().active()
-            // span.setTag("http.body", payload.request.body)
-            // span.setTag("http.info", payload.http)
-            // span.setTag("http.query", payload.query)
 
             app.tracer.appsec.trackCustomEvent('malicious.trap', {
                 type: 'malicious',
