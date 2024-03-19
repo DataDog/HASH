@@ -12,13 +12,10 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm i
-# If you are building your code for production
-# RUN npm ci --only=production
 
 # Bundle app source
 COPY . .
 
 RUN chmod +x ./bin/hash-honeypot
 
-#ENTRYPOINT [ "./bin/hash-honeypot", "help" ]
 CMD ["sleep", "infinity"]
