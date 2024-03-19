@@ -15,7 +15,9 @@ const run = (appFolder, options) => {
     app.config = config;
     app.config.options = options; //add the cli options to config
 
-    app.logger = newLogger(app.config);
+    const log = newLogger(app.config);
+    app.logger = log.logger
+    app.tracer = log.tracer
 
     app.logger.info('App -> Starting HASH ');
 
