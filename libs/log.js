@@ -5,6 +5,7 @@ const MAX_FILE_SIZE = 1000000;
 const MAX_FILES = 100;
 
 module.exports.newLogger = (config) => {
+    let tracer = null; //init status in case of datadog is not enabled
     const availableTransports = {
         console: () => {
             return new winston.transports.Console({
@@ -42,11 +43,22 @@ module.exports.newLogger = (config) => {
                 return false;
             }
 
-            require('dd-trace').init({
+            tracer = require('dd-trace').init({
                 appsec: true,
                 logInjection: true,
                 service: datadogServiceName,
             });
+
+            tracer.use('express', {
+                // hook will be executed right before the request span is finished
+                hooks: {
+                  request: (span, req, res) => {
+                    span.setTag("http.body", req.body)
+                    span.setTag("http.query", req.query)
+                    span.setTag("http.full_headers", req.headers)
+                  }
+                }
+            })
 
             const params = new URLSearchParams({
                 "dd-api-key": datadogApiKey,
@@ -89,5 +101,5 @@ module.exports.newLogger = (config) => {
             );
         }
     }
-    return logger;
+    return { logger, tracer };
 };
