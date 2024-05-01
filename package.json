@@ -1,6 +1,6 @@
 {
     "name": "hash-honeypot",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "HTTP Agnostic Software Honeypot (HASH) - honeypot framework to build low interaction honeypots",
     "main": "index.js",
     "bin": {
