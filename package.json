@@ -15,7 +15,7 @@
     "author": "Datadog",
     "license": "Apache-2",
     "dependencies": {
-        "@faker-js/faker": "^7.6.0",
+        "@faker-js/faker": "^10.2.0",
         "chalk": "^4.1.2",
         "clear": "^0.1.0",
         "clui": "^0.3.6",
