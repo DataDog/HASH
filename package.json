@@ -16,7 +16,7 @@
     "license": "Apache-2",
     "dependencies": {
         "@faker-js/faker": "^7.6.0",
-        "chalk": "^4.1.2",
+        "chalk": "^5.6.2",
         "clear": "^0.1.0",
         "clui": "^0.3.6",
         "commander": "^11.0.0",
