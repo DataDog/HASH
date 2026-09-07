@@ -48,6 +48,15 @@
       "body-parser": {
         "qs": "^6.16.0"
       }
+    },
+    "external-editor": {
+      "tmp": "0.2.7"
+    },
+    "inquirer": {
+      "tmp": "0.2.7"
+    },
+    "tmp": {
+      "tmp": "0.2.7"
     }
   }
 }
