@@ -42,6 +42,12 @@
   "overrides": {
     "express-session": {
       "on-headers": "^1.1.0"
+    },
+    "express": {
+      "qs": "^6.16.0",
+      "body-parser": {
+        "qs": "^6.16.0"
+      }
     }
   }
 }
