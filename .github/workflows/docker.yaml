@@ -20,19 +20,19 @@ jobs:
             packages: write
         steps:
             - name: Checkout
-              uses: actions/checkout@v2.5.0
+              uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791 # v2.5.0
               with:
                   fetch-depth: 0
 
             - name: Log into registry ${{ env.REGISTRY }}
-              uses: docker/login-action@v2.1.0
+              uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # v2.1.0
               with:
                   registry: ${{ env.REGISTRY }}
                   username: ${{ github.actor }}
                   password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Build and push Docker image
-              uses: docker/build-push-action@v3.2.0
+              uses: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5 # v3.2.0
               with:
                   context: .
                   push: true
